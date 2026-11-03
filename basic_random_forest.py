@@ -6,6 +6,7 @@ import matplotlib
 matplotlib.use("Agg") 
 import matplotlib.pyplot as plt
 import pandas as pd
+import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import (
     confusion_matrix,
@@ -14,6 +15,8 @@ from sklearn.metrics import (
     recall_score,
     roc_auc_score,
     roc_curve,
+    average_precision_score,
+    matthews_corrcoef
 )
 from sklearn import set_config
 set_config(display="text")
@@ -76,6 +79,7 @@ def evaluate_and_save(model, data, features_name, name, output):
             "f1_anomaly": float(f1_score(
                 y_true, y_pred, pos_label=1, zero_division=0
             )),
+            "mcc": float(matthews_corrcoef(y_true, y_pred)),
             "confusion_matrix": {
                 "TN": int(tn),
                 "FP": int(fp),
@@ -90,6 +94,10 @@ def evaluate_and_save(model, data, features_name, name, output):
                 y_true, y_score, pos_label=1
             )
             metrics["auroc"] = float(roc_auc_score(y_true, y_score))
+            # PR-AUC (Average Precision)
+            metrics["pr_auc"] = float(
+                average_precision_score(y_true, y_score)
+            )
             pd.DataFrame({
                 "fpr": fpr,
                 "tpr": tpr,

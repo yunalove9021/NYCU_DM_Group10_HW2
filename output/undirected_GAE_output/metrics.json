@@ -1,0 +1,98 @@
+{
+  "val": {
+    "n_rows": 18485,
+    "n_labeled": 4330,
+    "original": {
+      "precision_anomaly": 0.15935334872979215,
+      "recall_anomaly": 1.0,
+      "f1_anomaly": 0.2749003984063745,
+      "mcc": 0.0,
+      "confusion_matrix": {
+        "TN": 0,
+        "FP": 3640,
+        "FN": 0,
+        "TP": 690
+      },
+      "auroc": 0.1844441790093964,
+      "pr_auc": 0.0937594948018774
+    },
+    "reversed": {
+      "precision_anomaly": 0.5128900949796472,
+      "recall_anomaly": 0.5478260869565217,
+      "f1_anomaly": 0.5297827610371408,
+      "mcc": 0.43747410879312776,
+      "confusion_matrix": {
+        "TN": 3281,
+        "FP": 359,
+        "FN": 312,
+        "TP": 378
+      },
+      "auroc": 0.8155558209906035,
+      "pr_auc": 0.53574436422031
+    }
+  },
+  "test_before_event": {
+    "n_rows": 32313,
+    "n_labeled": 8642,
+    "original": {
+      "precision_anomaly": 0.08470261513538532,
+      "recall_anomaly": 1.0,
+      "f1_anomaly": 0.15617665884360998,
+      "mcc": 0.0,
+      "confusion_matrix": {
+        "TN": 0,
+        "FP": 7910,
+        "FN": 0,
+        "TP": 732
+      },
+      "auroc": 0.2744269548817641,
+      "pr_auc": 0.05413875829103745
+    },
+    "reversed": {
+      "precision_anomaly": 0.3169877408056042,
+      "recall_anomaly": 0.24726775956284153,
+      "f1_anomaly": 0.2778204144282425,
+      "mcc": 0.22189435857305956,
+      "confusion_matrix": {
+        "TN": 7520,
+        "FP": 390,
+        "FN": 551,
+        "TP": 181
+      },
+      "auroc": 0.725573045118236,
+      "pr_auc": 0.3187522277267452
+    }
+  },
+  "test_after_event": {
+    "n_rows": 29684,
+    "n_labeled": 6687,
+    "original": {
+      "precision_anomaly": 0.025272917601315985,
+      "recall_anomaly": 1.0,
+      "f1_anomaly": 0.04929988331388565,
+      "mcc": 0.0,
+      "confusion_matrix": {
+        "TN": 0,
+        "FP": 6518,
+        "FN": 0,
+        "TP": 169
+      },
+      "auroc": 0.42576497310134337,
+      "pr_auc": 0.02073024434387466
+    },
+    "reversed": {
+      "precision_anomaly": 0.007462686567164179,
+      "recall_anomaly": 0.005917159763313609,
+      "f1_anomaly": 0.006600660066006601,
+      "mcc": -0.016226791698071077,
+      "confusion_matrix": {
+        "TN": 6385,
+        "FP": 133,
+        "FN": 168,
+        "TP": 1
+      },
+      "auroc": 0.5742350268986566,
+      "pr_auc": 0.026911494365820007
+    }
+  }
+}
