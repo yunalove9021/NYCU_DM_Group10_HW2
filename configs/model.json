@@ -95,10 +95,10 @@
       "encoder": "../output/GCN_RF_output/basic/model/basic_seed_123_GCN_RF_encoder.pt",
       "scaler": "../output/GCN_RF_output/basic/model/basic_seed_123_GCN_RF_scaler.joblib",
       "embeddings": {
-        "test_after_event": "../output/GCN_RF_output/basic/predict/basic_seed_123_GCN_RF_test_after_event_embeddings.csv",
-        "test_before_event": "../output/GCN_RF_output/basic/predict/basic_seed_123_GCN_RF_test_before_event_embeddings.csv",
         "train": "../output/GCN_RF_output/basic/predict/basic_seed_123_GCN_RF_train_embeddings.csv",
-        "val": "../output/GCN_RF_output/basic/predict/basic_seed_123_GCN_RF_val_embeddings.csv"
+        "val": "../output/GCN_RF_output/basic/predict/basic_seed_123_GCN_RF_val_embeddings.csv",
+        "test_before_event": "../output/GCN_RF_output/basic/predict/basic_seed_123_GCN_RF_test_before_event_embeddings.csv",
+        "test_after_event": "../output/GCN_RF_output/basic/predict/basic_seed_123_GCN_RF_test_after_event_embeddings.csv"
       }
     }
   },
@@ -114,10 +114,10 @@
       "encoder": "../output/GCN_RF_output/basic/model/basic_seed_42_GCN_RF_encoder.pt",
       "scaler": "../output/GCN_RF_output/basic/model/basic_seed_42_GCN_RF_scaler.joblib",
       "embeddings": {
-        "test_after_event": "../output/GCN_RF_output/basic/predict/basic_seed_42_GCN_RF_test_after_event_embeddings.csv",
-        "test_before_event": "../output/GCN_RF_output/basic/predict/basic_seed_42_GCN_RF_test_before_event_embeddings.csv",
         "train": "../output/GCN_RF_output/basic/predict/basic_seed_42_GCN_RF_train_embeddings.csv",
-        "val": "../output/GCN_RF_output/basic/predict/basic_seed_42_GCN_RF_val_embeddings.csv"
+        "val": "../output/GCN_RF_output/basic/predict/basic_seed_42_GCN_RF_val_embeddings.csv",
+        "test_before_event": "../output/GCN_RF_output/basic/predict/basic_seed_42_GCN_RF_test_before_event_embeddings.csv",
+        "test_after_event": "../output/GCN_RF_output/basic/predict/basic_seed_42_GCN_RF_test_after_event_embeddings.csv"
       }
     }
   },
@@ -133,10 +133,10 @@
       "encoder": "../output/GCN_RF_output/basic/model/basic_seed_456_GCN_RF_encoder.pt",
       "scaler": "../output/GCN_RF_output/basic/model/basic_seed_456_GCN_RF_scaler.joblib",
       "embeddings": {
-        "test_after_event": "../output/GCN_RF_output/basic/predict/basic_seed_456_GCN_RF_test_after_event_embeddings.csv",
-        "test_before_event": "../output/GCN_RF_output/basic/predict/basic_seed_456_GCN_RF_test_before_event_embeddings.csv",
         "train": "../output/GCN_RF_output/basic/predict/basic_seed_456_GCN_RF_train_embeddings.csv",
-        "val": "../output/GCN_RF_output/basic/predict/basic_seed_456_GCN_RF_val_embeddings.csv"
+        "val": "../output/GCN_RF_output/basic/predict/basic_seed_456_GCN_RF_val_embeddings.csv",
+        "test_before_event": "../output/GCN_RF_output/basic/predict/basic_seed_456_GCN_RF_test_before_event_embeddings.csv",
+        "test_after_event": "../output/GCN_RF_output/basic/predict/basic_seed_456_GCN_RF_test_after_event_embeddings.csv"
       }
     }
   },
@@ -152,10 +152,10 @@
       "encoder": "../output/GCN_RF_output/local_features/model/local_features_seed_123_GCN_RF_encoder.pt",
       "scaler": "../output/GCN_RF_output/local_features/model/local_features_seed_123_GCN_RF_scaler.joblib",
       "embeddings": {
-        "test_after_event": "../output/GCN_RF_output/local_features/predict/local_features_seed_123_GCN_RF_test_after_event_embeddings.csv",
-        "test_before_event": "../output/GCN_RF_output/local_features/predict/local_features_seed_123_GCN_RF_test_before_event_embeddings.csv",
         "train": "../output/GCN_RF_output/local_features/predict/local_features_seed_123_GCN_RF_train_embeddings.csv",
-        "val": "../output/GCN_RF_output/local_features/predict/local_features_seed_123_GCN_RF_val_embeddings.csv"
+        "val": "../output/GCN_RF_output/local_features/predict/local_features_seed_123_GCN_RF_val_embeddings.csv",
+        "test_before_event": "../output/GCN_RF_output/local_features/predict/local_features_seed_123_GCN_RF_test_before_event_embeddings.csv",
+        "test_after_event": "../output/GCN_RF_output/local_features/predict/local_features_seed_123_GCN_RF_test_after_event_embeddings.csv"
       }
     }
   },
@@ -171,10 +171,10 @@
       "encoder": "../output/GCN_RF_output/local_features/model/local_features_seed_42_GCN_RF_encoder.pt",
       "scaler": "../output/GCN_RF_output/local_features/model/local_features_seed_42_GCN_RF_scaler.joblib",
       "embeddings": {
-        "test_after_event": "../output/GCN_RF_output/local_features/predict/local_features_seed_42_GCN_RF_test_after_event_embeddings.csv",
-        "test_before_event": "../output/GCN_RF_output/local_features/predict/local_features_seed_42_GCN_RF_test_before_event_embeddings.csv",
         "train": "../output/GCN_RF_output/local_features/predict/local_features_seed_42_GCN_RF_train_embeddings.csv",
-        "val": "../output/GCN_RF_output/local_features/predict/local_features_seed_42_GCN_RF_val_embeddings.csv"
+        "val": "../output/GCN_RF_output/local_features/predict/local_features_seed_42_GCN_RF_val_embeddings.csv",
+        "test_before_event": "../output/GCN_RF_output/local_features/predict/local_features_seed_42_GCN_RF_test_before_event_embeddings.csv",
+        "test_after_event": "../output/GCN_RF_output/local_features/predict/local_features_seed_42_GCN_RF_test_after_event_embeddings.csv"
       }
     }
   },
@@ -190,10 +190,142 @@
       "encoder": "../output/GCN_RF_output/local_features/model/local_features_seed_456_GCN_RF_encoder.pt",
       "scaler": "../output/GCN_RF_output/local_features/model/local_features_seed_456_GCN_RF_scaler.joblib",
       "embeddings": {
-        "test_after_event": "../output/GCN_RF_output/local_features/predict/local_features_seed_456_GCN_RF_test_after_event_embeddings.csv",
-        "test_before_event": "../output/GCN_RF_output/local_features/predict/local_features_seed_456_GCN_RF_test_before_event_embeddings.csv",
         "train": "../output/GCN_RF_output/local_features/predict/local_features_seed_456_GCN_RF_train_embeddings.csv",
-        "val": "../output/GCN_RF_output/local_features/predict/local_features_seed_456_GCN_RF_val_embeddings.csv"
+        "val": "../output/GCN_RF_output/local_features/predict/local_features_seed_456_GCN_RF_val_embeddings.csv",
+        "test_before_event": "../output/GCN_RF_output/local_features/predict/local_features_seed_456_GCN_RF_test_before_event_embeddings.csv",
+        "test_after_event": "../output/GCN_RF_output/local_features/predict/local_features_seed_456_GCN_RF_test_after_event_embeddings.csv"
+      }
+    }
+  },
+  "seed_789_RF_basic": {
+    "schema_version": 1,
+    "seed": 789,
+    "model_name": "RF",
+    "set_name": "basic",
+    "path": {
+      "model": "../output/RF_output/basic/model/basic_seed_789_RF_model.joblib",
+      "feature_table": "../output/RF_output/basic/model/basic_seed_789_RF_features.json",
+      "feature_source": "feature_sets/basic.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_1105_RF_basic": {
+    "schema_version": 1,
+    "seed": 1105,
+    "model_name": "RF",
+    "set_name": "basic",
+    "path": {
+      "model": "../output/RF_output/basic/model/basic_seed_1105_RF_model.joblib",
+      "feature_table": "../output/RF_output/basic/model/basic_seed_1105_RF_features.json",
+      "feature_source": "feature_sets/basic.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_789_RF_local_features": {
+    "schema_version": 1,
+    "seed": 789,
+    "model_name": "RF",
+    "set_name": "local_features",
+    "path": {
+      "model": "../output/RF_output/local_features/model/local_features_seed_789_RF_model.joblib",
+      "feature_table": "../output/RF_output/local_features/model/local_features_seed_789_RF_features.json",
+      "feature_source": "feature_sets/local_features.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_1105_RF_local_features": {
+    "schema_version": 1,
+    "seed": 1105,
+    "model_name": "RF",
+    "set_name": "local_features",
+    "path": {
+      "model": "../output/RF_output/local_features/model/local_features_seed_1105_RF_model.joblib",
+      "feature_table": "../output/RF_output/local_features/model/local_features_seed_1105_RF_features.json",
+      "feature_source": "feature_sets/local_features.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_789_GCN_RF_basic": {
+    "schema_version": 1,
+    "seed": 789,
+    "model_name": "GCN_RF",
+    "set_name": "basic",
+    "path": {
+      "model": "../output/GCN_RF_output/basic/model/basic_seed_789_GCN_RF_model.joblib",
+      "feature_table": "../output/GCN_RF_output/basic/model/basic_seed_789_GCN_RF_features.json",
+      "feature_source": "feature_sets/basic.json",
+      "encoder": "../output/GCN_RF_output/basic/model/basic_seed_789_GCN_RF_encoder.pt",
+      "scaler": "../output/GCN_RF_output/basic/model/basic_seed_789_GCN_RF_scaler.joblib",
+      "embeddings": {
+        "train": "../output/GCN_RF_output/basic/predict/basic_seed_789_GCN_RF_train_embeddings.csv",
+        "val": "../output/GCN_RF_output/basic/predict/basic_seed_789_GCN_RF_val_embeddings.csv",
+        "test_before_event": "../output/GCN_RF_output/basic/predict/basic_seed_789_GCN_RF_test_before_event_embeddings.csv",
+        "test_after_event": "../output/GCN_RF_output/basic/predict/basic_seed_789_GCN_RF_test_after_event_embeddings.csv"
+      }
+    }
+  },
+  "seed_1105_GCN_RF_basic": {
+    "schema_version": 1,
+    "seed": 1105,
+    "model_name": "GCN_RF",
+    "set_name": "basic",
+    "path": {
+      "model": "../output/GCN_RF_output/basic/model/basic_seed_1105_GCN_RF_model.joblib",
+      "feature_table": "../output/GCN_RF_output/basic/model/basic_seed_1105_GCN_RF_features.json",
+      "feature_source": "feature_sets/basic.json",
+      "encoder": "../output/GCN_RF_output/basic/model/basic_seed_1105_GCN_RF_encoder.pt",
+      "scaler": "../output/GCN_RF_output/basic/model/basic_seed_1105_GCN_RF_scaler.joblib",
+      "embeddings": {
+        "train": "../output/GCN_RF_output/basic/predict/basic_seed_1105_GCN_RF_train_embeddings.csv",
+        "val": "../output/GCN_RF_output/basic/predict/basic_seed_1105_GCN_RF_val_embeddings.csv",
+        "test_before_event": "../output/GCN_RF_output/basic/predict/basic_seed_1105_GCN_RF_test_before_event_embeddings.csv",
+        "test_after_event": "../output/GCN_RF_output/basic/predict/basic_seed_1105_GCN_RF_test_after_event_embeddings.csv"
+      }
+    }
+  },
+  "seed_789_GCN_RF_local_features": {
+    "schema_version": 1,
+    "seed": 789,
+    "model_name": "GCN_RF",
+    "set_name": "local_features",
+    "path": {
+      "model": "../output/GCN_RF_output/local_features/model/local_features_seed_789_GCN_RF_model.joblib",
+      "feature_table": "../output/GCN_RF_output/local_features/model/local_features_seed_789_GCN_RF_features.json",
+      "feature_source": "feature_sets/local_features.json",
+      "encoder": "../output/GCN_RF_output/local_features/model/local_features_seed_789_GCN_RF_encoder.pt",
+      "scaler": "../output/GCN_RF_output/local_features/model/local_features_seed_789_GCN_RF_scaler.joblib",
+      "embeddings": {
+        "train": "../output/GCN_RF_output/local_features/predict/local_features_seed_789_GCN_RF_train_embeddings.csv",
+        "val": "../output/GCN_RF_output/local_features/predict/local_features_seed_789_GCN_RF_val_embeddings.csv",
+        "test_before_event": "../output/GCN_RF_output/local_features/predict/local_features_seed_789_GCN_RF_test_before_event_embeddings.csv",
+        "test_after_event": "../output/GCN_RF_output/local_features/predict/local_features_seed_789_GCN_RF_test_after_event_embeddings.csv"
+      }
+    }
+  },
+  "seed_1105_GCN_RF_local_features": {
+    "schema_version": 1,
+    "seed": 1105,
+    "model_name": "GCN_RF",
+    "set_name": "local_features",
+    "path": {
+      "model": "../output/GCN_RF_output/local_features/model/local_features_seed_1105_GCN_RF_model.joblib",
+      "feature_table": "../output/GCN_RF_output/local_features/model/local_features_seed_1105_GCN_RF_features.json",
+      "feature_source": "feature_sets/local_features.json",
+      "encoder": "../output/GCN_RF_output/local_features/model/local_features_seed_1105_GCN_RF_encoder.pt",
+      "scaler": "../output/GCN_RF_output/local_features/model/local_features_seed_1105_GCN_RF_scaler.joblib",
+      "embeddings": {
+        "train": "../output/GCN_RF_output/local_features/predict/local_features_seed_1105_GCN_RF_train_embeddings.csv",
+        "val": "../output/GCN_RF_output/local_features/predict/local_features_seed_1105_GCN_RF_val_embeddings.csv",
+        "test_before_event": "../output/GCN_RF_output/local_features/predict/local_features_seed_1105_GCN_RF_test_before_event_embeddings.csv",
+        "test_after_event": "../output/GCN_RF_output/local_features/predict/local_features_seed_1105_GCN_RF_test_after_event_embeddings.csv"
       }
     }
   }

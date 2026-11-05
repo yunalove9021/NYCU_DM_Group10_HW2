@@ -92,8 +92,7 @@
     "feature_90",
     "feature_91",
     "feature_92",
-    "feature_93",
-    "feature_94"
+    "feature_93"
   ],
   "embedding_columns": [],
   "model_features": [
@@ -189,7 +188,6 @@
     "feature_90",
     "feature_91",
     "feature_92",
-    "feature_93",
-    "feature_94"
+    "feature_93"
   ]
 }

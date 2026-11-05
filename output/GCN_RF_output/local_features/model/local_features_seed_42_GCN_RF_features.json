@@ -92,8 +92,7 @@
     "feature_90",
     "feature_91",
     "feature_92",
-    "feature_93",
-    "feature_94"
+    "feature_93"
   ],
   "embedding_columns": [
     "emb_dim_1",
@@ -291,7 +290,6 @@
     "feature_91",
     "feature_92",
     "feature_93",
-    "feature_94",
     "emb_dim_1",
     "emb_dim_2",
     "emb_dim_3",

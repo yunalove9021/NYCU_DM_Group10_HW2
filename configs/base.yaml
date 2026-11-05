@@ -1,7 +1,7 @@
 # Paths are relative to this YAML file.
 input: ../data
 output: ../output
-random_seeds: [42, 123, 456]
+random_seeds: [42, 123, 456, 789, 1105]
 
 data:
   train_file: nodes_train.csv
