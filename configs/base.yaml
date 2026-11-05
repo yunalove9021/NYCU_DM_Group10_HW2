@@ -1,0 +1,54 @@
+# Paths are relative to this YAML file.
+input: ../data
+output: ../output
+random_seeds: [42, 123, 456]
+
+data:
+  train_file: nodes_train.csv
+  val_file: nodes_validation.csv
+  test_files:
+    test_before_event: nodes_test_pre_event.csv
+    test_after_event: nodes_test_post_event.csv
+  edge_files:
+    train: edge_train.csv
+    val: edge_validation.csv
+    test_before_event: edge_test_pre_event.csv
+    test_after_event: edge_test_post_event.csv
+  label_column: y
+  # Each JSON is a separate feature set; paths are relative to this YAML.
+  feature_columns:
+    - feature_sets/basic.json
+    - feature_sets/local_features.json
+    # - feature_sets/selected.json
+  feature_start_index: 4
+
+models:
+  # python main.py --config configs/base.yaml --model RF
+  RF:
+    params:
+      n_estimators: 300
+      class_weight: balanced
+      n_jobs: -1
+
+  # python main.py --config configs/base.yaml --model GCN_RF
+  GCN_RF:
+    params:
+      n_estimators: 300
+      class_weight: balanced
+      n_jobs: -1
+    encoder:
+      name: GCN
+      device: auto
+      # Keep txId1 -> txId2 direction; true adds reverse edges.
+      undirected: false
+      params:
+        hidden_dim: 128
+        embedding_dim: 100
+        num_layers: 2
+        dropout: 0.3
+        learning_rate: 0.001
+        epochs: 10
+        patience: 20
+      loss:
+        name: weighted_cross_entropy
+        class_weights: balanced

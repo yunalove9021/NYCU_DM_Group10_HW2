@@ -1,1 +1,5 @@
 data/
+__pycache__/
+.venv-gcn/
+*embedding.csv
+*embeddings.csv
