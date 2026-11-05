@@ -202,11 +202,11 @@ def main(data_dir, output_dir, n_estimators, random_seed):
     test_after_event = pd.read_csv(data_dir+'nodes_test_post_event.csv')
     data_sets = [(train, 'train'), (val, 'val'), (test_before_event, 'test_before_event'), (test_after_event, 'test_after_event')]
     summarize_labels(data_sets, output_dir)
-    features_name = ["feature_5"]
+    features_name = ["feature_18"]
     print(len(train))
     val_labeled = val["y"].notna()
     ##########################################################################################################################
-    model = SingleFeatureModel(feature_name="feature_5")
+    model = SingleFeatureModel(feature_name="feature_18")
     model.fit(
         val.loc[val_labeled, features_name],
         val.loc[val_labeled, "y"]

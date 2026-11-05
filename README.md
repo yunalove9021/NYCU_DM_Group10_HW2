@@ -42,6 +42,8 @@ data:
   feature_columns:
     - feature_sets/basic.json
     - feature_sets/local_features.json
+    - feature_sets/feature_selection_cor_095.json
+    - feature_sets/feature_selection_cor_09.json
 ```
 
 `basic.json` 包含目前訓練資料從 index 4 起的 165 個特徵欄名。新增特徵組合時，可在 `configs/feature_sets/` 建立另一份 JSON，再加入上述清單；不同特徵集的檔名須唯一。
@@ -62,6 +64,11 @@ python main.py --config configs/base.yaml --model GCN_RF
 ```
 
 RF 不需要 edge 或 encoder；GCN_RF 的 node CSV 必須有唯一且非缺失的 `txId`，edge CSV 必須有 `txId1`、`txId2`，且端點都存在於對應 node CSV。沒有 edge 的孤立節點可以正常處理。
+
+剩下模型指令
+```powershell
+python \src\model\your_model.py
+```
 
 ## 模型與訓練輸出
 

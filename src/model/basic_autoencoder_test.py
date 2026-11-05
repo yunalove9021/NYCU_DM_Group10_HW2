@@ -7,17 +7,12 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
-
+from sklearn.ensemble import IsolationForest
 import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset
 from sklearn.preprocessing import StandardScaler
-
-# --- 1. 新增 PyTorch Geometric 的 GCN 卷積層 ---
-from torch_geometric.nn import GCNConv
-from torch_geometric.utils import to_undirected
-
 from sklearn.metrics import (
     confusion_matrix,
     f1_score,
@@ -39,40 +34,25 @@ def set_seed(seed=42):
         torch.cuda.manual_seed(seed)
         torch.cuda.manual_seed_all(seed)
 
-# --- 2. 新增建立 edge_index 的函數 ---
-def create_edge_index(nodes_df, edges_df):
-    if nodes_df["txId"].duplicated().any():
-        raise ValueError("Duplicate txId found in nodes_df.")
-    node_ids = nodes_df['txId'].values
-    id2idx = {node_id: idx for idx, node_id in enumerate(node_ids)}
-    valid_edges = edges_df[
-        edges_df['txId1'].isin(id2idx) &
-        edges_df['txId2'].isin(id2idx)
-    ]
-    source = valid_edges['txId1'].map(id2idx).to_numpy(dtype=np.int64)
-    target = valid_edges['txId2'].map(id2idx).to_numpy(dtype=np.int64)
-    if len(source) == 0:
-        return torch.empty((2, 0), dtype=torch.long)
-    edge_index = torch.from_numpy(np.stack([source, target], axis=0))
-    # edge_index = to_undirected(edge_index) # Undirected TODO
-    return edge_index
+def evaluate_and_save(model, data, features_name, name, output):
+    """
+    同時計算 Original MSE 與 Reversed -MSE 的評估結果。
+    僅使用有標籤的資料計算評估指標。
+    """
 
-# --- 修改評估函數，加入 edges 參數 ---
-def evaluate_and_save(model, data, edges, features_name, name, output):
-    """輸出所有資料列的預測，僅用有標籤的資料計算評估指標。"""
-    
-    # 呼叫預測時傳入 nodes_df, edges_df, 與 features
-    y_score = model.predict_score(data, edges, features_name)
-    if model.threshold is None:
-        raise ValueError("Threshold has not been selected.")
-    if model.reverse_threshold is None:
-        raise ValueError("Reversed threshold has not been selected.")
+    if model.threshold is None or model.reverse_threshold is None:
+        raise ValueError("Both thresholds must be selected first.")
+
+    X = data[features_name]
+    mse_scores = model.predict_score(X)
+
     # Original: MSE
-    original_score = y_score
+    original_score = mse_scores
 
     # Reversed: -MSE
-    reversed_score = -y_score
+    reversed_score = -mse_scores
 
+    # 使用各自 Validation 選出的 threshold
     original_pred = (
         original_score >= model.threshold
     ).astype(int)
@@ -80,11 +60,12 @@ def evaluate_and_save(model, data, edges, features_name, name, output):
     reversed_pred = (
         reversed_score >= model.reverse_threshold
     ).astype(int)
-    
-    known = data["y"].notna()
 
     actual = data["y"]
 
+    known = actual.notna()
+
+    # 輸出 Original Predictions
     pd.DataFrame({
         "time_step": data["time_step"],
         "y_true": actual,
@@ -95,6 +76,7 @@ def evaluate_and_save(model, data, edges, features_name, name, output):
         index=False,
         encoding="utf-8-sig",
     )
+
     # 輸出 Reversed Predictions
     pd.DataFrame({
         "time_step": data["time_step"],
@@ -113,9 +95,11 @@ def evaluate_and_save(model, data, edges, features_name, name, output):
         "original": {},
         "reversed": {},
     }
+
     curve_data = None
 
     if known.any():
+
         y_true = actual.loc[known].astype(int).to_numpy()
 
         original_score_labeled = original_score[known.to_numpy()]
@@ -125,6 +109,7 @@ def evaluate_and_save(model, data, edges, features_name, name, output):
         reversed_pred_labeled = reversed_pred[known.to_numpy()]
 
         def calculate_metrics(y_true, y_pred, y_score):
+
             tn, fp, fn, tp = confusion_matrix(
                 y_true,
                 y_pred,
@@ -134,21 +119,24 @@ def evaluate_and_save(model, data, edges, features_name, name, output):
             result = {
                 "precision_anomaly": float(
                     precision_score(
-                        y_true, y_pred,
+                        y_true,
+                        y_pred,
                         pos_label=1,
                         zero_division=0
                     )
                 ),
                 "recall_anomaly": float(
                     recall_score(
-                        y_true, y_pred,
+                        y_true,
+                        y_pred,
                         pos_label=1,
                         zero_division=0
                     )
                 ),
                 "f1_anomaly": float(
                     f1_score(
-                        y_true, y_pred,
+                        y_true,
+                        y_pred,
                         zero_division=0
                     )
                 ),
@@ -166,6 +154,7 @@ def evaluate_and_save(model, data, edges, features_name, name, output):
             }
 
             if len(np.unique(y_true)) == 2:
+
                 result["auroc"] = float(
                     roc_auc_score(y_true, y_score)
                 )
@@ -173,32 +162,37 @@ def evaluate_and_save(model, data, edges, features_name, name, output):
                 result["pr_auc"] = float(
                     average_precision_score(y_true, y_score)
                 )
+
             else:
                 result["auroc"] = None
                 result["pr_auc"] = None
 
             return result
 
+        # 計算 Original Metrics
         metrics["original"] = calculate_metrics(
             y_true,
             original_pred_labeled,
             original_score_labeled
         )
 
+        # 計算 Reversed Metrics
         metrics["reversed"] = calculate_metrics(
             y_true,
             reversed_pred_labeled,
             reversed_score_labeled
         )
 
-
         if len(np.unique(y_true)) == 2:
+
+            # Original ROC
             fpr_original, tpr_original, thresholds_original = roc_curve(
                 y_true,
                 original_score_labeled,
                 pos_label=1
             )
 
+            # Reversed ROC
             fpr_reversed, tpr_reversed, thresholds_reversed = roc_curve(
                 y_true,
                 reversed_score_labeled,
@@ -249,10 +243,15 @@ def evaluate_and_save(model, data, edges, features_name, name, output):
     return metrics, curve_data
 
 def summarize_labels(data_sets, output_dir):
+    """統計單一資料集的正常、異常及未標記樣本數量。"""
     output_dir = Path(output_dir)
     all_summary = []
     for data, name in data_sets:
-        y = data["y"] if "y" in data.columns else pd.Series(float("nan"), index=data.index)
+        y = (
+            data["y"]
+            if "y" in data.columns
+            else pd.Series(float("nan"), index=data.index)
+        )
         summary = {
             "dataset": name,
             "total": int(len(data)),
@@ -263,185 +262,220 @@ def summarize_labels(data_sets, output_dir):
         }
         all_summary.append(summary)
     summary = pd.DataFrame(all_summary)
-    summary.to_excel(output_dir / f"label_summary.xlsx", index=False)
+    summary.to_excel(
+        output_dir / f"label_summary.xlsx",
+        index=False
+    )
     return summary
 
-# --- 3. 將 PyTorch模型替換為 GAE 模型 ---
-class GAE_Model(nn.Module):
-    def __init__(self, input_dim, latent_dim=64):
-        super(GAE_Model, self).__init__()
-        # Encoder: 兩層 GCNConv
-        self.conv1 = GCNConv(input_dim, 128)
-        self.conv2 = GCNConv(128, latent_dim)
-        # Decoder: 一般的線性層即可
+class PytorchAutoencoder(nn.Module):
+    def __init__(self, input_dim, latent_dim=32):
+        super(PytorchAutoencoder, self).__init__()
+        self.encoder = nn.Sequential(
+            nn.Linear(input_dim, 128),
+            nn.ReLU(),
+            nn.Linear(128, 64),
+            nn.ReLU(),
+            nn.Linear(64, latent_dim),
+            # nn.ReLU()
+        )
         self.decoder = nn.Sequential(
-            nn.Linear(latent_dim, 128),
+            nn.Linear(latent_dim, 64),
+            nn.ReLU(),
+            nn.Linear(64, 128),
             nn.ReLU(),
             nn.Linear(128, input_dim)
         )
 
-    def forward(self, x, edge_index):
-        z = torch.relu(self.conv1(x, edge_index))
-        z = torch.relu(self.conv2(z, edge_index))
-        return self.decoder(z)
+    def forward(self, x):
+        return self.decoder(self.encoder(x))
 
-# --- 模型包裹類別更新為 GraphAutoencoderModel ---
-class GraphAutoencoderModel:
-    def __init__(self, input_dim, latent_dim=64, epochs=50, lr=1e-3, random_seed=42):
+class AutoencoderModel:
+    def __init__(self, input_dim, latent_dim=32, epochs=50, batch_size=256, lr=1e-3, random_seed=42):
         set_seed(random_seed)
+        self.random_seed = random_seed
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
-        self.model = GAE_Model(input_dim, latent_dim).to(self.device)
+        self.input_dim = input_dim
+        self.latent_dim = latent_dim
         self.epochs = epochs
+        self.batch_size = batch_size
         self.lr = lr
+        self.model = None
         self.scaler = StandardScaler()
         self.threshold = None
         self.reverse_threshold = None
-        self.original_best_f1 = None
-        self.reverse_best_f1 = None
 
-    def fit(self, nodes_df, edges_df, features):
+        self.best_f1 = None
+        self.reverse_best_f1 = None
+        self.best_ap = None
+        self.reverse_best_ap = None
+
+    def fit(self, X_train, X_val):
         """
-        防漏規範：只使用純正常節點 (y==0) 建立 Subgraph 與進行訓練
+        使用 Training 正常資料進行無監督特徵標準化與訓練。
         """
-        y_train = pd.to_numeric(nodes_df['y'], errors='coerce')
-        normal_mask = (y_train == 0)
-        normal_nodes = (
-            nodes_df.loc[normal_mask]
-            .copy()
-            .reset_index(drop=True)
-        )
-        if len(normal_nodes) == 0:
-            raise ValueError("No normal nodes found.")
-        # 僅使用 Normal-induced Subgraph
-        edge_index = create_edge_index(
-            normal_nodes,
-            edges_df
-        ).to(self.device)
+        self.model = PytorchAutoencoder(self.input_dim, self.latent_dim).to(self.device)
+        X_train_scaled = self.scaler.fit_transform(X_train)
+        X_val_scaled = self.scaler.transform(X_val)
         
-        # 只使用 Normal Nodes 的 Features
-        X_train = normal_nodes[features].to_numpy(dtype=np.float32)
-        if not np.isfinite(X_train).all():
-            raise ValueError("Training features contain NaN or Inf.")
-        X_scaled = self.scaler.fit_transform(X_train)
-        x_tensor = torch.tensor(
-            X_scaled,
-            dtype=torch.float32,
-            device=self.device
-        )
+        tensor_x = torch.FloatTensor(X_train_scaled)
+        dataset = TensorDataset(tensor_x)
+        generator = torch.Generator()
+        generator.manual_seed(self.random_seed)
+        dataloader = DataLoader(dataset, batch_size=self.batch_size, shuffle=True, generator=generator)
+        tensor_val = torch.FloatTensor(X_val_scaled).to(self.device)
 
         optimizer = optim.Adam(self.model.parameters(), lr=self.lr)
-        criterion = nn.MSELoss()
-        
-        self.model.train()
+        # criterion = nn.MSELoss()
+        criterion = nn.L1Loss()
 
+        # early stop
+        patience = 10
+        best_val_loss = float('inf')
+        patience_counter = 0
+        best_model_state = None
+        
         for epoch in range(self.epochs):
-            optimizer.zero_grad()
-            reconstructed = self.model(x_tensor, edge_index)
-            loss = criterion(
-                reconstructed,
-                x_tensor
-            )
-            loss.backward()
-            optimizer.step()
+            self.model.train()
+            total_loss = 0.0
+            for (batch_x,) in dataloader:
+                batch_x = batch_x.to(self.device)
+                optimizer.zero_grad()
+                reconstructed = self.model(batch_x)
+                loss = criterion(reconstructed, batch_x)
+                loss.backward()
+                optimizer.step()
+                total_loss += loss.item()
+            avg_loss = total_loss / len(dataloader)
+            # 驗證階段
+            self.model.eval()
+            with torch.no_grad():
+                val_reconstructed = self.model(tensor_val)
+                val_loss = criterion(val_reconstructed, tensor_val).item()
             
+            # Early Stopping 邏輯
+            if val_loss < best_val_loss:
+                best_val_loss = val_loss
+                patience_counter = 0
+                import copy
+                best_model_state = copy.deepcopy(self.model.state_dict())
+            else:
+                patience_counter += 1
+
             if (epoch + 1) % 10 == 0:
-                print(f"Epoch [{epoch+1}/{self.epochs}], Loss: {loss.item():.6f}")
+                print(
+                    f"Epoch [{epoch+1}/{self.epochs}], "
+                    f"Loss: {avg_loss:.6f}"
+                )
+            if patience_counter >= patience:
+                print(f"Early stopping triggered at Epoch {epoch+1}!")
+                break
+        # 還原泛化能力最佳的權重
+        if best_model_state is not None:
+            self.model.load_state_dict(best_model_state)
         return self
 
-    def predict_score(self, nodes_df, edges_df, features):
+    def predict_score(self, X):
+        """
+        計算 MSE 作為重建誤差。
+        針對 Elliptic 分數倒置現象，回傳 -MSE 作為最終的異常分數。
+        """
         self.model.eval()
-        edge_index = create_edge_index(nodes_df, edges_df).to(self.device)
-        
-        X_test = nodes_df[features].values
-        if not np.isfinite(X_test).all():
-            raise ValueError("Prediction features contain NaN or Inf.")
-        X_scaled = self.scaler.transform(X_test)
-        x_tensor = torch.FloatTensor(X_scaled).to(self.device)
+        X_scaled = self.scaler.transform(X)
+        tensor_x = torch.FloatTensor(X_scaled).to(self.device)
         
         with torch.no_grad():
-            reconstructed = self.model(x_tensor, edge_index)
-            mse_per_sample = torch.mean((reconstructed - x_tensor) ** 2, dim=1)
+            reconstructed = self.model(tensor_x)
+            # mse_per_sample = torch.mean((reconstructed - tensor_x) ** 2, dim=1)
+            l1_per_sample = torch.mean(torch.abs(reconstructed - tensor_x), dim=1)
             
-        scores = mse_per_sample.cpu().numpy()
+        # scores = mse_per_sample.cpu().numpy()
+        scores = l1_per_sample.cpu().numpy()
         return scores
 
-    def select_threshold(self, nodes_df, edges_df, features):
-        """在 Validation 分別選擇 MSE 與 -MSE 的最佳 threshold"""
-        mse_scores = self.predict_score(nodes_df, edges_df, features)
-        
-        y_series = pd.to_numeric(
-            nodes_df["y"], errors="coerce"
-        )
-        valid_mask = y_series.notna()
-        
-        y_true = y_series[valid_mask].astype(int).to_numpy()
-        if len(y_true) == 0 or len(np.unique(y_true)) != 2:
+    def select_threshold(self, X_val, y_val):
+        """
+        使用 Validation 選擇最佳 AP threshold。
+        """
+        mae_scores = self.predict_score(X_val)
+        y_val = np.asarray(y_val).astype(int)
+
+        if len(y_val) == 0:
+            raise ValueError("Validation has no labeled samples.")
+
+        if len(np.unique(y_val)) != 2:
             raise ValueError(
                 "Validation must contain both normal and illicit samples."
             )
-        mse_scores = mse_scores[valid_mask.to_numpy()]
 
         def find_best_threshold(scores):
             thresholds = np.unique(scores)
-
             best_f1 = -1
             best_threshold = None
 
             for threshold in thresholds:
                 y_pred = (scores >= threshold).astype(int)
-
                 current_f1 = f1_score(
-                    y_true,
+                    y_val,
                     y_pred,
                     zero_division=0
                 )
-
                 if current_f1 > best_f1:
                     best_f1 = current_f1
                     best_threshold = threshold
 
             return float(best_threshold), float(best_f1)
-        
+
         # Original MSE
-        self.threshold, self.original_best_f1 = (
-            find_best_threshold(mse_scores)
+        self.best_ap = average_precision_score(
+            y_val,
+            mae_scores
+        )
+        self.threshold, self.best_f1 = find_best_threshold(
+            mae_scores
         )
 
         # Reversed -MSE
-        self.reverse_threshold, self.reverse_best_f1 = (
-            find_best_threshold(-mse_scores)
+        reversed_scores = -mae_scores
+        self.reverse_best_ap = average_precision_score(
+            y_val,
+            reversed_scores
+        )
+        self.reverse_threshold, self.reverse_best_f1 = find_best_threshold(
+            reversed_scores
         )
 
         print("\nValidation Threshold Selection")
 
-        print(
-            f"Original MSE threshold: {self.threshold:.6f}, "
-            f"F1: {self.original_best_f1:.4f}"
-        )
+        print("\nOriginal MAE:")
+        print(f"AP:        {self.best_ap:.4f}")
+        print(f"Threshold: {self.threshold:.6f}")
+        print(f"F1:        {self.best_f1:.4f}")
 
-        print(
-            f"Reversed -MSE threshold: {self.reverse_threshold:.6f}, "
-            f"F1: {self.reverse_best_f1:.4f}"
-        )
+        print("\nReversed -MAE:")
+        print(f"AP:        {self.reverse_best_ap:.4f}")
+        print(f"Threshold: {self.reverse_threshold:.6f}")
+        print(f"F1:        {self.reverse_best_f1:.4f}")
+
+        print("\nOriginal MAE Statistics:")
+        print(f"Min:    {mae_scores.min():.6f}")
+        print(f"Max:    {mae_scores.max():.6f}")
+        print(f"Mean:   {mae_scores.mean():.6f}")
+        print(f"Median: {np.median(mae_scores):.6f}")
+
+        print("\nReversed -MAE Statistics:")
+        print(f"Min:    {reversed_scores.min():.6f}")
+        print(f"Max:    {reversed_scores.max():.6f}")
+        print(f"Mean:   {reversed_scores.mean():.6f}")
+        print(f"Median: {np.median(reversed_scores):.6f}")
 
         return self
 
-    def predict(self, nodes_df, edges_df, features):
-        scores = self.predict_score(nodes_df, edges_df, features)
-        return (scores >= self.threshold).astype(int)
-
 def main(data_dir, output_dir, random_seed):
-    # --- 5. 同步讀取 Node 與 Edge 的 CSV ---
     train = pd.read_csv(data_dir+'nodes_train.csv')
     val = pd.read_csv(data_dir+'nodes_validation.csv')
     test_before_event = pd.read_csv(data_dir+'nodes_test_pre_event.csv')
     test_after_event = pd.read_csv(data_dir+'nodes_test_post_event.csv')
-    
-    edge_train = pd.read_csv(data_dir+'edge_train.csv')
-    edge_val = pd.read_csv(data_dir+'edge_validation.csv')
-    edge_test_before = pd.read_csv(data_dir+'edge_test_pre_event.csv')
-    edge_test_after = pd.read_csv(data_dir+'edge_test_post_event.csv')
-    
     data_sets = [(train, 'train'), (val, 'val'), (test_before_event, 'test_before_event'), (test_after_event, 'test_after_event')]
     summarize_labels(data_sets, output_dir)
     ##########################################################################################################################
@@ -450,66 +484,110 @@ def main(data_dir, output_dir, random_seed):
         if col.startswith("feature_")
     ]
 
+    normal_mask_train = (train["y"] == 0)
+    X_train_normal = train.loc[normal_mask_train, features_name]
     input_dim = len(features_name)
-    print(f"Number of input features: {input_dim}")
+    val_labeled = val["y"].notna()
+    normal_mask_val = (val["y"] == 0) & val_labeled
+    X_val_normal = val.loc[normal_mask_val, features_name]
 
-    model = GraphAutoencoderModel(
-        input_dim=input_dim,
-        latent_dim=64,
-        epochs=50,
-        random_seed=random_seed
+    param_grid = {
+        'latent_dim': [32, 64],
+        'batch_size': [128, 256],
+        'epochs':[50, 100],
+        'lr': [1e-3, 5e-4]
+    }
+    
+    import itertools
+    keys = param_grid.keys()
+    combinations = [dict(zip(keys, v)) for v in itertools.product(*param_grid.values())]
+    
+    best_overall_ap = -1
+    best_params = None
+    best_model = None
+    
+    print(f"Starting Grid Search over {len(combinations)} combinations...")
+    
+    for i, params in enumerate(combinations):
+        print(f"\n[{i+1}/{len(combinations)}] Testing parameters: {params}")
+        
+        # 初始化模型 (epochs 設較大以供 Early Stopping 發揮)
+        current_model = AutoencoderModel(
+            input_dim=input_dim,
+            latent_dim=params['latent_dim'],
+            epochs=params['epochs'], 
+            batch_size=params['batch_size'],
+            lr=params['lr'],
+            random_seed=random_seed
+        )
+        
+        # 訓練模型 (傳入 X_train_normal 與 X_val_normal 進行 Early Stopping)
+        current_model.fit(X_train_normal, X_val_normal)
+        # 只計算 Validation AP 進行模型選擇
+        val_scores = current_model.predict_score(
+            val.loc[val_labeled, features_name]
+        )
+
+        val_ap = average_precision_score(
+            val.loc[val_labeled, "y"].astype(int),
+            -val_scores
+        )
+        print(f"Validation Reversed AP: {val_ap:.4f}")
+        
+        if val_ap > best_overall_ap:
+            best_overall_ap = val_ap
+            best_params = params
+
+            import copy
+            best_model = copy.deepcopy(current_model)
+    
+    # 最佳模型確定後，才選擇分類 threshold
+    best_model.select_threshold(
+        val.loc[val_labeled, features_name],
+        val.loc[val_labeled, "y"]
     )
-    
-    # 訓練階段：傳入完整的 node 與 edge 進行圖卷積建立
-    model.fit(train, edge_train, features_name)
 
-    # 選擇閾值：傳入 Validation 的圖結構
-    model.select_threshold(val, edge_val, features_name)
+            
+    print("\n==================================================")
+    print("Grid Search Completed!")
+    print(f"Best Parameters: {best_params}")
+    print(f"Best Validation Reversed AP: {best_overall_ap:.4f}")
+    print(f"Best Validation Reversed F1: {best_model.reverse_best_f1:.4f}")
+    print(f"Best Reversed Threshold: {best_model.reverse_threshold:.6f}")
     ##########################################################################################################################
-    
     output = Path(output_dir)
     metrics = {}
     plt.figure(figsize=(7, 6))
     has_curve = False
-    
-    # 將 edge 資料打包供迴圈呼叫
-    test_packs = (
-        ("val", val, edge_val), 
-        ("test_before_event", test_before_event, edge_test_before), 
-        ("test_after_event", test_after_event, edge_test_after)
-    )
-    
-    for name, data, edges in test_packs:
-        # 注意這裡傳入了 edges
+    for name, data in (("val", val), ("test_before_event", test_before_event), ("test_after_event", test_after_event)):
         metrics[name], curve_data = evaluate_and_save(
-            model, data, edges, features_name, name, output
+            best_model, data, features_name, name, output
         )
         if curve_data is not None:
             fpr, tpr = curve_data["original"]
             plt.plot(
-                fpr,
-                tpr,
-                label=f"{name.upper()} Original "
+                fpr, tpr,
+                label=(
+                    f"{name.upper()} Original "
                     f"(AUROC={metrics[name]['original']['auroc']:.4f})"
+                ),
             )
-
             fpr, tpr = curve_data["reversed"]
 
             plt.plot(
-                fpr,
-                tpr,
+                fpr, tpr,
                 linestyle="--",
-                label=f"{name.upper()} Reversed "
+                label=(
+                    f"{name.upper()} Reversed "
                     f"(AUROC={metrics[name]['reversed']['auroc']:.4f})"
+                )
             )
-
             has_curve = True
-            
     if has_curve:
         plt.plot([0, 1], [0, 1], "--", label="Random (AUROC=0.5)")
         plt.xlabel("False Positive Rate (FPR)")
         plt.ylabel("True Positive Rate (TPR)")
-        plt.title("ROC Curve: Validation / Test (GAE)")
+        plt.title("ROC Curve: Validation / Test")
         plt.legend()
         plt.tight_layout()
         plt.savefig(output / "roc_curve.png", dpi=180)
@@ -520,6 +598,8 @@ def main(data_dir, output_dir, random_seed):
         encoding="utf-8",
     )
 
+    print(f"Training rows: {len(train)}")
+    print(f"Features: {len(features_name)}")
     for name, result in metrics.items():
         original_auc = result["original"].get("auroc")
         reversed_auc = result["reversed"].get("auroc")
@@ -535,7 +615,7 @@ def main(data_dir, output_dir, random_seed):
 if __name__ == '__main__':
     random_seed = 42
     data_dir = f'./Data/'
-    output_dir = f'./output/directed_GAE_output/'
+    output_dir = f'./output/AE_best_output/'
     output = Path(output_dir)
     output.mkdir(parents=True, exist_ok=True)
     main(data_dir, output_dir, random_seed)
