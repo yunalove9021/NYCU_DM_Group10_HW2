@@ -1,4 +1,63 @@
-# RF 與 GCN_RF
+# Data Mining HW2 (Group 10)
+
+## Dataset: Elliptic Bitcoin Dataset
+
+本專案使用 [Elliptic Bitcoin Dataset](https://www.kaggle.com/datasets/ellipticco/elliptic-data-set) 進行 Bitcoin 非法交易辨識。資料由 Elliptic 與 MIT-IBM Watson AI Lab 發表，詳細定義見 Weber et al. 的[原始論文](https://arxiv.org/abs/1908.02591)。
+
+### 資料結構
+
+- **Nodes：203,769**
+  - 每個 node 代表一筆 Bitcoin transaction。
+- **Edges：234,355**
+  - Directed edge `txId1 → txId2` 表示 BTC 由前一筆交易流向下一筆交易。
+- **Node features：166**
+  - `time_step`
+  - 93 個匿名 local transaction features
+  - 72 個由一跳前後鄰居彙整而成的 aggregated features
+- **Time steps：49**
+  - 相鄰 time steps 約間隔兩週。
+  - 每個 time step 是由發生時間相近、相差少於三小時的交易組成的獨立圖。
+  - 不同 time steps 之間沒有 edges。
+
+### 標籤分布
+
+- **Illicit：4,545**
+  - 原始標籤為 `class=1`，處理後映射為 `y=1`。
+  - 包含 scam、malware、ransomware、Ponzi scheme 等非法實體所發起的交易。
+- **Licit：42,019**
+  - 原始標籤為 `class=2`，處理後映射為 `y=0`。
+  - 包含 exchange、wallet provider、miner 等合法實體所發起的交易。
+- **Unknown：157,205**
+  - 保留為無標籤節點。
+  - 不參與分類 loss、Random Forest 擬合或評估指標計算。
+  - 在圖模型中仍保留其 node features 與 edge connections。
+
+### 資料處理
+
+- 使用 `txId` 合併原始 node features 與 class labels。
+- 保留 `txId`、`time_step`、原始標籤與 165 個匿名數值特徵。
+- Node 與 edge 資料依相同的 time-step 範圍切分。
+- 採用 chronological split，避免未來時間的交易資訊進入訓練資料。
+
+### Dark market shutdown
+
+- 原始論文指出，`time_step 43` 發生了一次 **dark market shutdown**。
+- 論文沒有公開該 dark market 的具體名稱。
+- 該事件造成交易與非法活動模式改變，原始論文中的所有模型在事件後均出現明顯效能下降。
+- 本專案將測試資料分為事件前後兩段，用來比較模型面對突發事件與時間分布轉移時的穩健性。
+
+### 資料切分
+
+| Split | Time step | Nodes | Edges |
+| --- | ---: | ---: | ---: |
+| Train | 1–30 | 123,287 | 142,784 |
+| Validation | 31–35 | 18,485 | 20,410 |
+| Test（pre-shutdown） | 36–42 | 32,313 | 37,502 |
+| Test（post-shutdown） | 43–49 | 29,684 | 33,659 |
+
+原始論文使用 time steps 1–34 訓練、35–49 測試；本專案另外保留 validation set，並將測試資料依 dark market shutdown 分為事件前後兩段。
+
+## RF 與 GCN_RF
 
 本專案提供兩種二元節點分類流程，支援以 YAML 設定多組特徵集與 random seed，並透過模型索引載入已訓練模型進行預測。
 
@@ -9,7 +68,7 @@
 
 標籤欄位預設為 `y`：`0` 為正常、`1` 為異常。無標籤節點不參與分類 loss 或 RF 擬合，但可產生預測；GCN 訓練時也會保留這些節點的圖連接。
 
-## 執行環境
+### 執行環境
 
 於專案根目錄執行下列指令。RF 與 GCN_RF 的依賴已合併至同一份 `requirements.txt`：
 
@@ -19,7 +78,7 @@ python -m pip install -r requirements.txt
 
 載入既有模型時，請使用與訓練相容的套件版本，尤其是 scikit-learn 與 PyTorch。
 
-## 訓練設定
+### 訓練設定
 
 訓練使用 [configs/base.yaml](configs/base.yaml)，各模型參數獨立設定。
 
@@ -54,7 +113,7 @@ GCN 的 scaler 僅以 train 擬合，encoder 只用 train 標籤更新權重，�
 
 GCN 預設保留 `txId1 → txId2` 方向；`undirected: true` 可加入反向邊。各 split 以整張圖批次推論，表示預測時該 split 的 node 特徵與 edge 皆已可見。
 
-## 訓練指令
+### 訓練指令
 
 每次指令只執行所選模型。未指定 `--model` 時預設為 RF。
 
@@ -70,7 +129,7 @@ RF 不需要 edge 或 encoder；GCN_RF 的 node CSV 必須有唯一且非缺失�
 python \src\model\your_model.py
 ```
 
-## 模型與訓練輸出
+### 模型與訓練輸出
 
 結果依模型與特徵集分開保存：
 
@@ -98,7 +157,7 @@ output/
 
 訓練會新增或更新對應索引，保留其他模型；若指定其他位置的 YAML，則更新該 YAML 同目錄的 `model.json`。移動模型檔案後須同步調整索引路徑。
 
-## 使用 test 資料預測
+### 使用 test 資料預測
 
 `predict.py` 依模型索引載入已訓練模型，不會重新訓練。以下範例使用 `data/` 中事件前、事件後的測試資料。
 
@@ -138,7 +197,7 @@ predict_result/seed_42_GCN_RF_local_features_nodes_test_post_event_predictions.c
 
 CSV 保留輸入順序，包含 `input_row`（從 0 起）、可用的 `txId` 與 `time_step`、`y_pred`、`probability_normal`、`probability_anomaly`。同索引、同輸入檔名的預測會覆寫原結果。
 
-## Python 調用介面
+### Python 調用介面
 
 需要在其他 Python 程式中調用時，可由索引載入模型與特徵順序：
 
@@ -155,7 +214,7 @@ predictions = bundle["model"].predict(x)
 
 RF 使用相同介面，改選 RF 索引並呼叫 `prepare_model_input(bundle, nodes)` 即可。
 
-## 訓練結果 Excel 報表
+### 訓練結果 Excel 報表
 
 ```powershell
 python analysis_check.py --config configs/base.yaml
