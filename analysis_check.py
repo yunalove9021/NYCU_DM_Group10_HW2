@@ -77,11 +77,37 @@ def build_report(config_path, output_path=None):
         parameters.append({"model": model_name, "parameter": "random_seeds",
                            "value": json.dumps(seeds), "description": "各次訓練的 random_state；GCN 同時設定 NumPy/PyTorch seed",
                            "source": str(config_path)})
+        # 取得目前模型的參數，用來動態還原資料夾名稱
+        model_params = model_settings.get("params", {})
+        
+        # 依照模型種類，動態生成資料夾名稱 (需與各模型 _run_feature_set 內的命名邏輯一致)
+        if model_name == "AE":
+            loss_type = model_params.get("loss_type", "MSE")
+            rev_tag = "_reverse" if model_params.get("reverse_score", False) else ""
+            folder_name = f"{model_name}_{loss_type}{rev_tag}_output"
+            
+        elif model_name == "GAE":
+            loss_type = model_params.get("loss_type", "MSE")
+            graph_type = "undirected" if model_params.get("undirected", True) else "directed"
+            rev_tag = "_reverse" if model_params.get("reverse_score", False) else ""
+            folder_name = f"{model_name}_{loss_type}_{graph_type}{rev_tag}_output"
+            
+        elif model_name == "isolation_forest":
+            rev_tag = "_reverse" if model_params.get("reverse_score", False) else ""
+            folder_name = f"{model_name}{rev_tag}_output"
+            
+        elif model_name == "single_feature":
+            target_feat = model_params.get("feature_name", "feature_5")
+            folder_name = f"{model_name}_{target_feat}_output"
+            
+        else:
+            folder_name = f"{model_name}_output"
         for feature_set in settings["feature_sets"]:
             set_name = feature_set["set_name"]
             for seed in sorted(seeds):
                 prefix = f"{set_name}_seed_{seed}_{model_name}"
-                metrics_path = output_root / f"{model_name}_output" / set_name / "eval" / f"{prefix}_metrics.json"
+                metrics_path = output_root / folder_name / set_name / "eval" / f"{prefix}_metrics.json"
+                # metrics_path = output_root / f"{model_name}_output" / set_name / "eval" / f"{prefix}_metrics.json"
                 base = {"model": model_name, "feature_set": set_name, "seed": seed}
                 error, metrics = None, {}
                 if not metrics_path.is_file():
@@ -180,7 +206,7 @@ def build_report(config_path, output_path=None):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=ROOT / "configs" / "base.yaml")
-    parser.add_argument("--output", type=Path, default=ROOT / "Analysis" / "training_results2.xlsx")
+    parser.add_argument("--output", type=Path, default=ROOT / "Analysis" / "training_results3.xlsx")
     args = parser.parse_args(argv)
     try:
         return build_report(args.config, args.output)
