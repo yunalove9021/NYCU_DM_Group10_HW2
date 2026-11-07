@@ -61,14 +61,15 @@ GCN 預設保留 `txId1 → txId2` 方向；`undirected: true` 可加入反向�
 ```powershell
 python main.py --config configs/base.yaml --model RF
 python main.py --config configs/base.yaml --model GCN_RF
+python main.py --config configs/base.yaml --model random_score
+python main.py --config configs/base.yaml --model single_feature
+python main.py --config configs/base.yaml --model isolation_forest
+python main.py --config configs/base.yaml --model AE
+python main.py --config configs/base.yaml --model GAE
 ```
 
 RF 不需要 edge 或 encoder；GCN_RF 的 node CSV 必須有唯一且非缺失的 `txId`，edge CSV 必須有 `txId1`、`txId2`，且端點都存在於對應 node CSV。沒有 edge 的孤立節點可以正常處理。
 
-剩下模型指令
-```powershell
-python \src\model\your_model.py
-```
 
 ## 模型與訓練輸出
 
