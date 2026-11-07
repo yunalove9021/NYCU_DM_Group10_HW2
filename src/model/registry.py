@@ -6,6 +6,11 @@ from importlib import import_module
 MODEL_REGISTRY = {
     "RF": "src.model.RF",
     "GCN_RF": "src.model.GCN_RF",
+    "random_score": "src.model.random_score",
+    "single_feature": "src.model.single_feature",
+    "isolation_forest": "src.model.isolation_forest",
+    "AE": "src.model.AE",
+    "GAE": "src.model.GAE",
 }
 
 

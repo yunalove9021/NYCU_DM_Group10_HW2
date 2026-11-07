@@ -328,5 +328,1139 @@
         "test_after_event": "../output/GCN_RF_output/local_features/predict/local_features_seed_1105_GCN_RF_test_after_event_embeddings.csv"
       }
     }
+  },
+  "seed_42_random_score_basic": {
+    "schema_version": 1,
+    "seed": 42,
+    "model_name": "random_score",
+    "set_name": "basic",
+    "path": {
+      "model": "../output/random_score_output/basic/model/basic_seed_42_random_score_model.joblib",
+      "feature_table": "../output/random_score_output/basic/model/basic_seed_42_random_score_features.json",
+      "feature_source": "feature_sets/basic.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_123_random_score_basic": {
+    "schema_version": 1,
+    "seed": 123,
+    "model_name": "random_score",
+    "set_name": "basic",
+    "path": {
+      "model": "../output/random_score_output/basic/model/basic_seed_123_random_score_model.joblib",
+      "feature_table": "../output/random_score_output/basic/model/basic_seed_123_random_score_features.json",
+      "feature_source": "feature_sets/basic.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_456_random_score_basic": {
+    "schema_version": 1,
+    "seed": 456,
+    "model_name": "random_score",
+    "set_name": "basic",
+    "path": {
+      "model": "../output/random_score_output/basic/model/basic_seed_456_random_score_model.joblib",
+      "feature_table": "../output/random_score_output/basic/model/basic_seed_456_random_score_features.json",
+      "feature_source": "feature_sets/basic.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_789_random_score_basic": {
+    "schema_version": 1,
+    "seed": 789,
+    "model_name": "random_score",
+    "set_name": "basic",
+    "path": {
+      "model": "../output/random_score_output/basic/model/basic_seed_789_random_score_model.joblib",
+      "feature_table": "../output/random_score_output/basic/model/basic_seed_789_random_score_features.json",
+      "feature_source": "feature_sets/basic.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_1105_random_score_basic": {
+    "schema_version": 1,
+    "seed": 1105,
+    "model_name": "random_score",
+    "set_name": "basic",
+    "path": {
+      "model": "../output/random_score_output/basic/model/basic_seed_1105_random_score_model.joblib",
+      "feature_table": "../output/random_score_output/basic/model/basic_seed_1105_random_score_features.json",
+      "feature_source": "feature_sets/basic.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_42_random_score_local_features": {
+    "schema_version": 1,
+    "seed": 42,
+    "model_name": "random_score",
+    "set_name": "local_features",
+    "path": {
+      "model": "../output/random_score_output/local_features/model/local_features_seed_42_random_score_model.joblib",
+      "feature_table": "../output/random_score_output/local_features/model/local_features_seed_42_random_score_features.json",
+      "feature_source": "feature_sets/local_features.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_123_random_score_local_features": {
+    "schema_version": 1,
+    "seed": 123,
+    "model_name": "random_score",
+    "set_name": "local_features",
+    "path": {
+      "model": "../output/random_score_output/local_features/model/local_features_seed_123_random_score_model.joblib",
+      "feature_table": "../output/random_score_output/local_features/model/local_features_seed_123_random_score_features.json",
+      "feature_source": "feature_sets/local_features.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_456_random_score_local_features": {
+    "schema_version": 1,
+    "seed": 456,
+    "model_name": "random_score",
+    "set_name": "local_features",
+    "path": {
+      "model": "../output/random_score_output/local_features/model/local_features_seed_456_random_score_model.joblib",
+      "feature_table": "../output/random_score_output/local_features/model/local_features_seed_456_random_score_features.json",
+      "feature_source": "feature_sets/local_features.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_789_random_score_local_features": {
+    "schema_version": 1,
+    "seed": 789,
+    "model_name": "random_score",
+    "set_name": "local_features",
+    "path": {
+      "model": "../output/random_score_output/local_features/model/local_features_seed_789_random_score_model.joblib",
+      "feature_table": "../output/random_score_output/local_features/model/local_features_seed_789_random_score_features.json",
+      "feature_source": "feature_sets/local_features.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_1105_random_score_local_features": {
+    "schema_version": 1,
+    "seed": 1105,
+    "model_name": "random_score",
+    "set_name": "local_features",
+    "path": {
+      "model": "../output/random_score_output/local_features/model/local_features_seed_1105_random_score_model.joblib",
+      "feature_table": "../output/random_score_output/local_features/model/local_features_seed_1105_random_score_features.json",
+      "feature_source": "feature_sets/local_features.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_42_random_score_feature_selection_cor_095": {
+    "schema_version": 1,
+    "seed": 42,
+    "model_name": "random_score",
+    "set_name": "feature_selection_cor_095",
+    "path": {
+      "model": "../output/random_score_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_42_random_score_model.joblib",
+      "feature_table": "../output/random_score_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_42_random_score_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_095.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_123_random_score_feature_selection_cor_095": {
+    "schema_version": 1,
+    "seed": 123,
+    "model_name": "random_score",
+    "set_name": "feature_selection_cor_095",
+    "path": {
+      "model": "../output/random_score_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_123_random_score_model.joblib",
+      "feature_table": "../output/random_score_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_123_random_score_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_095.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_456_random_score_feature_selection_cor_095": {
+    "schema_version": 1,
+    "seed": 456,
+    "model_name": "random_score",
+    "set_name": "feature_selection_cor_095",
+    "path": {
+      "model": "../output/random_score_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_456_random_score_model.joblib",
+      "feature_table": "../output/random_score_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_456_random_score_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_095.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_789_random_score_feature_selection_cor_095": {
+    "schema_version": 1,
+    "seed": 789,
+    "model_name": "random_score",
+    "set_name": "feature_selection_cor_095",
+    "path": {
+      "model": "../output/random_score_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_789_random_score_model.joblib",
+      "feature_table": "../output/random_score_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_789_random_score_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_095.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_1105_random_score_feature_selection_cor_095": {
+    "schema_version": 1,
+    "seed": 1105,
+    "model_name": "random_score",
+    "set_name": "feature_selection_cor_095",
+    "path": {
+      "model": "../output/random_score_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_1105_random_score_model.joblib",
+      "feature_table": "../output/random_score_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_1105_random_score_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_095.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_42_random_score_feature_selection_cor_09": {
+    "schema_version": 1,
+    "seed": 42,
+    "model_name": "random_score",
+    "set_name": "feature_selection_cor_09",
+    "path": {
+      "model": "../output/random_score_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_42_random_score_model.joblib",
+      "feature_table": "../output/random_score_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_42_random_score_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_09.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_123_random_score_feature_selection_cor_09": {
+    "schema_version": 1,
+    "seed": 123,
+    "model_name": "random_score",
+    "set_name": "feature_selection_cor_09",
+    "path": {
+      "model": "../output/random_score_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_123_random_score_model.joblib",
+      "feature_table": "../output/random_score_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_123_random_score_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_09.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_456_random_score_feature_selection_cor_09": {
+    "schema_version": 1,
+    "seed": 456,
+    "model_name": "random_score",
+    "set_name": "feature_selection_cor_09",
+    "path": {
+      "model": "../output/random_score_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_456_random_score_model.joblib",
+      "feature_table": "../output/random_score_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_456_random_score_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_09.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_789_random_score_feature_selection_cor_09": {
+    "schema_version": 1,
+    "seed": 789,
+    "model_name": "random_score",
+    "set_name": "feature_selection_cor_09",
+    "path": {
+      "model": "../output/random_score_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_789_random_score_model.joblib",
+      "feature_table": "../output/random_score_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_789_random_score_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_09.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_1105_random_score_feature_selection_cor_09": {
+    "schema_version": 1,
+    "seed": 1105,
+    "model_name": "random_score",
+    "set_name": "feature_selection_cor_09",
+    "path": {
+      "model": "../output/random_score_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_1105_random_score_model.joblib",
+      "feature_table": "../output/random_score_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_1105_random_score_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_09.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_42_single_feature_basic": {
+    "schema_version": 1,
+    "seed": 42,
+    "model_name": "single_feature",
+    "set_name": "basic",
+    "path": {
+      "model": "../output/single_feature_feature_18_output/basic/model/basic_seed_42_single_feature_model.joblib",
+      "feature_table": "../output/single_feature_feature_18_output/basic/model/basic_seed_42_single_feature_features.json",
+      "feature_source": "feature_sets/basic.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_42_isolation_forest_basic": {
+    "schema_version": 1,
+    "seed": 42,
+    "model_name": "isolation_forest",
+    "set_name": "basic",
+    "path": {
+      "model": "../output/isolation_forest_output/basic/model/basic_seed_42_isolation_forest_model.joblib",
+      "feature_table": "../output/isolation_forest_output/basic/model/basic_seed_42_isolation_forest_features.json",
+      "feature_source": "feature_sets/basic.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_123_isolation_forest_basic": {
+    "schema_version": 1,
+    "seed": 123,
+    "model_name": "isolation_forest",
+    "set_name": "basic",
+    "path": {
+      "model": "../output/isolation_forest_output/basic/model/basic_seed_123_isolation_forest_model.joblib",
+      "feature_table": "../output/isolation_forest_output/basic/model/basic_seed_123_isolation_forest_features.json",
+      "feature_source": "feature_sets/basic.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_456_isolation_forest_basic": {
+    "schema_version": 1,
+    "seed": 456,
+    "model_name": "isolation_forest",
+    "set_name": "basic",
+    "path": {
+      "model": "../output/isolation_forest_output/basic/model/basic_seed_456_isolation_forest_model.joblib",
+      "feature_table": "../output/isolation_forest_output/basic/model/basic_seed_456_isolation_forest_features.json",
+      "feature_source": "feature_sets/basic.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_789_isolation_forest_basic": {
+    "schema_version": 1,
+    "seed": 789,
+    "model_name": "isolation_forest",
+    "set_name": "basic",
+    "path": {
+      "model": "../output/isolation_forest_output/basic/model/basic_seed_789_isolation_forest_model.joblib",
+      "feature_table": "../output/isolation_forest_output/basic/model/basic_seed_789_isolation_forest_features.json",
+      "feature_source": "feature_sets/basic.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_1105_isolation_forest_basic": {
+    "schema_version": 1,
+    "seed": 1105,
+    "model_name": "isolation_forest",
+    "set_name": "basic",
+    "path": {
+      "model": "../output/isolation_forest_output/basic/model/basic_seed_1105_isolation_forest_model.joblib",
+      "feature_table": "../output/isolation_forest_output/basic/model/basic_seed_1105_isolation_forest_features.json",
+      "feature_source": "feature_sets/basic.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_42_isolation_forest_local_features": {
+    "schema_version": 1,
+    "seed": 42,
+    "model_name": "isolation_forest",
+    "set_name": "local_features",
+    "path": {
+      "model": "../output/isolation_forest_output/local_features/model/local_features_seed_42_isolation_forest_model.joblib",
+      "feature_table": "../output/isolation_forest_output/local_features/model/local_features_seed_42_isolation_forest_features.json",
+      "feature_source": "feature_sets/local_features.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_123_isolation_forest_local_features": {
+    "schema_version": 1,
+    "seed": 123,
+    "model_name": "isolation_forest",
+    "set_name": "local_features",
+    "path": {
+      "model": "../output/isolation_forest_output/local_features/model/local_features_seed_123_isolation_forest_model.joblib",
+      "feature_table": "../output/isolation_forest_output/local_features/model/local_features_seed_123_isolation_forest_features.json",
+      "feature_source": "feature_sets/local_features.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_456_isolation_forest_local_features": {
+    "schema_version": 1,
+    "seed": 456,
+    "model_name": "isolation_forest",
+    "set_name": "local_features",
+    "path": {
+      "model": "../output/isolation_forest_output/local_features/model/local_features_seed_456_isolation_forest_model.joblib",
+      "feature_table": "../output/isolation_forest_output/local_features/model/local_features_seed_456_isolation_forest_features.json",
+      "feature_source": "feature_sets/local_features.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_789_isolation_forest_local_features": {
+    "schema_version": 1,
+    "seed": 789,
+    "model_name": "isolation_forest",
+    "set_name": "local_features",
+    "path": {
+      "model": "../output/isolation_forest_output/local_features/model/local_features_seed_789_isolation_forest_model.joblib",
+      "feature_table": "../output/isolation_forest_output/local_features/model/local_features_seed_789_isolation_forest_features.json",
+      "feature_source": "feature_sets/local_features.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_1105_isolation_forest_local_features": {
+    "schema_version": 1,
+    "seed": 1105,
+    "model_name": "isolation_forest",
+    "set_name": "local_features",
+    "path": {
+      "model": "../output/isolation_forest_output/local_features/model/local_features_seed_1105_isolation_forest_model.joblib",
+      "feature_table": "../output/isolation_forest_output/local_features/model/local_features_seed_1105_isolation_forest_features.json",
+      "feature_source": "feature_sets/local_features.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_42_isolation_forest_feature_selection_cor_095": {
+    "schema_version": 1,
+    "seed": 42,
+    "model_name": "isolation_forest",
+    "set_name": "feature_selection_cor_095",
+    "path": {
+      "model": "../output/isolation_forest_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_42_isolation_forest_model.joblib",
+      "feature_table": "../output/isolation_forest_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_42_isolation_forest_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_095.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_123_isolation_forest_feature_selection_cor_095": {
+    "schema_version": 1,
+    "seed": 123,
+    "model_name": "isolation_forest",
+    "set_name": "feature_selection_cor_095",
+    "path": {
+      "model": "../output/isolation_forest_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_123_isolation_forest_model.joblib",
+      "feature_table": "../output/isolation_forest_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_123_isolation_forest_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_095.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_456_isolation_forest_feature_selection_cor_095": {
+    "schema_version": 1,
+    "seed": 456,
+    "model_name": "isolation_forest",
+    "set_name": "feature_selection_cor_095",
+    "path": {
+      "model": "../output/isolation_forest_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_456_isolation_forest_model.joblib",
+      "feature_table": "../output/isolation_forest_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_456_isolation_forest_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_095.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_789_isolation_forest_feature_selection_cor_095": {
+    "schema_version": 1,
+    "seed": 789,
+    "model_name": "isolation_forest",
+    "set_name": "feature_selection_cor_095",
+    "path": {
+      "model": "../output/isolation_forest_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_789_isolation_forest_model.joblib",
+      "feature_table": "../output/isolation_forest_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_789_isolation_forest_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_095.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_1105_isolation_forest_feature_selection_cor_095": {
+    "schema_version": 1,
+    "seed": 1105,
+    "model_name": "isolation_forest",
+    "set_name": "feature_selection_cor_095",
+    "path": {
+      "model": "../output/isolation_forest_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_1105_isolation_forest_model.joblib",
+      "feature_table": "../output/isolation_forest_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_1105_isolation_forest_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_095.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_42_isolation_forest_feature_selection_cor_09": {
+    "schema_version": 1,
+    "seed": 42,
+    "model_name": "isolation_forest",
+    "set_name": "feature_selection_cor_09",
+    "path": {
+      "model": "../output/isolation_forest_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_42_isolation_forest_model.joblib",
+      "feature_table": "../output/isolation_forest_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_42_isolation_forest_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_09.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_123_isolation_forest_feature_selection_cor_09": {
+    "schema_version": 1,
+    "seed": 123,
+    "model_name": "isolation_forest",
+    "set_name": "feature_selection_cor_09",
+    "path": {
+      "model": "../output/isolation_forest_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_123_isolation_forest_model.joblib",
+      "feature_table": "../output/isolation_forest_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_123_isolation_forest_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_09.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_456_isolation_forest_feature_selection_cor_09": {
+    "schema_version": 1,
+    "seed": 456,
+    "model_name": "isolation_forest",
+    "set_name": "feature_selection_cor_09",
+    "path": {
+      "model": "../output/isolation_forest_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_456_isolation_forest_model.joblib",
+      "feature_table": "../output/isolation_forest_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_456_isolation_forest_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_09.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_789_isolation_forest_feature_selection_cor_09": {
+    "schema_version": 1,
+    "seed": 789,
+    "model_name": "isolation_forest",
+    "set_name": "feature_selection_cor_09",
+    "path": {
+      "model": "../output/isolation_forest_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_789_isolation_forest_model.joblib",
+      "feature_table": "../output/isolation_forest_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_789_isolation_forest_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_09.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_1105_isolation_forest_feature_selection_cor_09": {
+    "schema_version": 1,
+    "seed": 1105,
+    "model_name": "isolation_forest",
+    "set_name": "feature_selection_cor_09",
+    "path": {
+      "model": "../output/isolation_forest_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_1105_isolation_forest_model.joblib",
+      "feature_table": "../output/isolation_forest_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_1105_isolation_forest_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_09.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_42_AE_basic": {
+    "schema_version": 1,
+    "seed": 42,
+    "model_name": "AE",
+    "set_name": "basic",
+    "path": {
+      "model": "../output/AE_MSE_reverse_output/basic/model/basic_seed_42_AE_model.joblib",
+      "feature_table": "../output/AE_MSE_reverse_output/basic/model/basic_seed_42_AE_features.json",
+      "feature_source": "feature_sets/basic.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_123_AE_basic": {
+    "schema_version": 1,
+    "seed": 123,
+    "model_name": "AE",
+    "set_name": "basic",
+    "path": {
+      "model": "../output/AE_MSE_reverse_output/basic/model/basic_seed_123_AE_model.joblib",
+      "feature_table": "../output/AE_MSE_reverse_output/basic/model/basic_seed_123_AE_features.json",
+      "feature_source": "feature_sets/basic.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_456_AE_basic": {
+    "schema_version": 1,
+    "seed": 456,
+    "model_name": "AE",
+    "set_name": "basic",
+    "path": {
+      "model": "../output/AE_MSE_reverse_output/basic/model/basic_seed_456_AE_model.joblib",
+      "feature_table": "../output/AE_MSE_reverse_output/basic/model/basic_seed_456_AE_features.json",
+      "feature_source": "feature_sets/basic.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_789_AE_basic": {
+    "schema_version": 1,
+    "seed": 789,
+    "model_name": "AE",
+    "set_name": "basic",
+    "path": {
+      "model": "../output/AE_MSE_reverse_output/basic/model/basic_seed_789_AE_model.joblib",
+      "feature_table": "../output/AE_MSE_reverse_output/basic/model/basic_seed_789_AE_features.json",
+      "feature_source": "feature_sets/basic.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_1105_AE_basic": {
+    "schema_version": 1,
+    "seed": 1105,
+    "model_name": "AE",
+    "set_name": "basic",
+    "path": {
+      "model": "../output/AE_MSE_reverse_output/basic/model/basic_seed_1105_AE_model.joblib",
+      "feature_table": "../output/AE_MSE_reverse_output/basic/model/basic_seed_1105_AE_features.json",
+      "feature_source": "feature_sets/basic.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_42_AE_local_features": {
+    "schema_version": 1,
+    "seed": 42,
+    "model_name": "AE",
+    "set_name": "local_features",
+    "path": {
+      "model": "../output/AE_MSE_reverse_output/local_features/model/local_features_seed_42_AE_model.joblib",
+      "feature_table": "../output/AE_MSE_reverse_output/local_features/model/local_features_seed_42_AE_features.json",
+      "feature_source": "feature_sets/local_features.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_123_AE_local_features": {
+    "schema_version": 1,
+    "seed": 123,
+    "model_name": "AE",
+    "set_name": "local_features",
+    "path": {
+      "model": "../output/AE_MSE_reverse_output/local_features/model/local_features_seed_123_AE_model.joblib",
+      "feature_table": "../output/AE_MSE_reverse_output/local_features/model/local_features_seed_123_AE_features.json",
+      "feature_source": "feature_sets/local_features.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_456_AE_local_features": {
+    "schema_version": 1,
+    "seed": 456,
+    "model_name": "AE",
+    "set_name": "local_features",
+    "path": {
+      "model": "../output/AE_MSE_reverse_output/local_features/model/local_features_seed_456_AE_model.joblib",
+      "feature_table": "../output/AE_MSE_reverse_output/local_features/model/local_features_seed_456_AE_features.json",
+      "feature_source": "feature_sets/local_features.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_789_AE_local_features": {
+    "schema_version": 1,
+    "seed": 789,
+    "model_name": "AE",
+    "set_name": "local_features",
+    "path": {
+      "model": "../output/AE_MSE_reverse_output/local_features/model/local_features_seed_789_AE_model.joblib",
+      "feature_table": "../output/AE_MSE_reverse_output/local_features/model/local_features_seed_789_AE_features.json",
+      "feature_source": "feature_sets/local_features.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_1105_AE_local_features": {
+    "schema_version": 1,
+    "seed": 1105,
+    "model_name": "AE",
+    "set_name": "local_features",
+    "path": {
+      "model": "../output/AE_MSE_reverse_output/local_features/model/local_features_seed_1105_AE_model.joblib",
+      "feature_table": "../output/AE_MSE_reverse_output/local_features/model/local_features_seed_1105_AE_features.json",
+      "feature_source": "feature_sets/local_features.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_42_AE_feature_selection_cor_095": {
+    "schema_version": 1,
+    "seed": 42,
+    "model_name": "AE",
+    "set_name": "feature_selection_cor_095",
+    "path": {
+      "model": "../output/AE_MSE_reverse_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_42_AE_model.joblib",
+      "feature_table": "../output/AE_MSE_reverse_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_42_AE_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_095.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_123_AE_feature_selection_cor_095": {
+    "schema_version": 1,
+    "seed": 123,
+    "model_name": "AE",
+    "set_name": "feature_selection_cor_095",
+    "path": {
+      "model": "../output/AE_MSE_reverse_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_123_AE_model.joblib",
+      "feature_table": "../output/AE_MSE_reverse_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_123_AE_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_095.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_456_AE_feature_selection_cor_095": {
+    "schema_version": 1,
+    "seed": 456,
+    "model_name": "AE",
+    "set_name": "feature_selection_cor_095",
+    "path": {
+      "model": "../output/AE_MSE_reverse_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_456_AE_model.joblib",
+      "feature_table": "../output/AE_MSE_reverse_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_456_AE_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_095.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_789_AE_feature_selection_cor_095": {
+    "schema_version": 1,
+    "seed": 789,
+    "model_name": "AE",
+    "set_name": "feature_selection_cor_095",
+    "path": {
+      "model": "../output/AE_MSE_reverse_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_789_AE_model.joblib",
+      "feature_table": "../output/AE_MSE_reverse_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_789_AE_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_095.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_1105_AE_feature_selection_cor_095": {
+    "schema_version": 1,
+    "seed": 1105,
+    "model_name": "AE",
+    "set_name": "feature_selection_cor_095",
+    "path": {
+      "model": "../output/AE_MSE_reverse_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_1105_AE_model.joblib",
+      "feature_table": "../output/AE_MSE_reverse_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_1105_AE_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_095.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_42_AE_feature_selection_cor_09": {
+    "schema_version": 1,
+    "seed": 42,
+    "model_name": "AE",
+    "set_name": "feature_selection_cor_09",
+    "path": {
+      "model": "../output/AE_MSE_reverse_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_42_AE_model.joblib",
+      "feature_table": "../output/AE_MSE_reverse_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_42_AE_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_09.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_123_AE_feature_selection_cor_09": {
+    "schema_version": 1,
+    "seed": 123,
+    "model_name": "AE",
+    "set_name": "feature_selection_cor_09",
+    "path": {
+      "model": "../output/AE_MSE_reverse_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_123_AE_model.joblib",
+      "feature_table": "../output/AE_MSE_reverse_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_123_AE_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_09.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_456_AE_feature_selection_cor_09": {
+    "schema_version": 1,
+    "seed": 456,
+    "model_name": "AE",
+    "set_name": "feature_selection_cor_09",
+    "path": {
+      "model": "../output/AE_MSE_reverse_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_456_AE_model.joblib",
+      "feature_table": "../output/AE_MSE_reverse_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_456_AE_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_09.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_789_AE_feature_selection_cor_09": {
+    "schema_version": 1,
+    "seed": 789,
+    "model_name": "AE",
+    "set_name": "feature_selection_cor_09",
+    "path": {
+      "model": "../output/AE_MSE_reverse_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_789_AE_model.joblib",
+      "feature_table": "../output/AE_MSE_reverse_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_789_AE_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_09.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_1105_AE_feature_selection_cor_09": {
+    "schema_version": 1,
+    "seed": 1105,
+    "model_name": "AE",
+    "set_name": "feature_selection_cor_09",
+    "path": {
+      "model": "../output/AE_MSE_reverse_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_1105_AE_model.joblib",
+      "feature_table": "../output/AE_MSE_reverse_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_1105_AE_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_09.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_42_GAE_basic": {
+    "schema_version": 1,
+    "seed": 42,
+    "model_name": "GAE",
+    "set_name": "basic",
+    "path": {
+      "model": "../output/GAE_MSE_undirected_reverse_output/basic/model/basic_seed_42_GAE_model.joblib",
+      "feature_table": "../output/GAE_MSE_undirected_reverse_output/basic/model/basic_seed_42_GAE_features.json",
+      "feature_source": "feature_sets/basic.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_123_GAE_basic": {
+    "schema_version": 1,
+    "seed": 123,
+    "model_name": "GAE",
+    "set_name": "basic",
+    "path": {
+      "model": "../output/GAE_MSE_undirected_reverse_output/basic/model/basic_seed_123_GAE_model.joblib",
+      "feature_table": "../output/GAE_MSE_undirected_reverse_output/basic/model/basic_seed_123_GAE_features.json",
+      "feature_source": "feature_sets/basic.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_456_GAE_basic": {
+    "schema_version": 1,
+    "seed": 456,
+    "model_name": "GAE",
+    "set_name": "basic",
+    "path": {
+      "model": "../output/GAE_MSE_undirected_reverse_output/basic/model/basic_seed_456_GAE_model.joblib",
+      "feature_table": "../output/GAE_MSE_undirected_reverse_output/basic/model/basic_seed_456_GAE_features.json",
+      "feature_source": "feature_sets/basic.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_789_GAE_basic": {
+    "schema_version": 1,
+    "seed": 789,
+    "model_name": "GAE",
+    "set_name": "basic",
+    "path": {
+      "model": "../output/GAE_MSE_undirected_reverse_output/basic/model/basic_seed_789_GAE_model.joblib",
+      "feature_table": "../output/GAE_MSE_undirected_reverse_output/basic/model/basic_seed_789_GAE_features.json",
+      "feature_source": "feature_sets/basic.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_1105_GAE_basic": {
+    "schema_version": 1,
+    "seed": 1105,
+    "model_name": "GAE",
+    "set_name": "basic",
+    "path": {
+      "model": "../output/GAE_MSE_undirected_reverse_output/basic/model/basic_seed_1105_GAE_model.joblib",
+      "feature_table": "../output/GAE_MSE_undirected_reverse_output/basic/model/basic_seed_1105_GAE_features.json",
+      "feature_source": "feature_sets/basic.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_42_GAE_local_features": {
+    "schema_version": 1,
+    "seed": 42,
+    "model_name": "GAE",
+    "set_name": "local_features",
+    "path": {
+      "model": "../output/GAE_MSE_undirected_reverse_output/local_features/model/local_features_seed_42_GAE_model.joblib",
+      "feature_table": "../output/GAE_MSE_undirected_reverse_output/local_features/model/local_features_seed_42_GAE_features.json",
+      "feature_source": "feature_sets/local_features.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_123_GAE_local_features": {
+    "schema_version": 1,
+    "seed": 123,
+    "model_name": "GAE",
+    "set_name": "local_features",
+    "path": {
+      "model": "../output/GAE_MSE_undirected_reverse_output/local_features/model/local_features_seed_123_GAE_model.joblib",
+      "feature_table": "../output/GAE_MSE_undirected_reverse_output/local_features/model/local_features_seed_123_GAE_features.json",
+      "feature_source": "feature_sets/local_features.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_456_GAE_local_features": {
+    "schema_version": 1,
+    "seed": 456,
+    "model_name": "GAE",
+    "set_name": "local_features",
+    "path": {
+      "model": "../output/GAE_MSE_undirected_reverse_output/local_features/model/local_features_seed_456_GAE_model.joblib",
+      "feature_table": "../output/GAE_MSE_undirected_reverse_output/local_features/model/local_features_seed_456_GAE_features.json",
+      "feature_source": "feature_sets/local_features.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_789_GAE_local_features": {
+    "schema_version": 1,
+    "seed": 789,
+    "model_name": "GAE",
+    "set_name": "local_features",
+    "path": {
+      "model": "../output/GAE_MSE_undirected_reverse_output/local_features/model/local_features_seed_789_GAE_model.joblib",
+      "feature_table": "../output/GAE_MSE_undirected_reverse_output/local_features/model/local_features_seed_789_GAE_features.json",
+      "feature_source": "feature_sets/local_features.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_1105_GAE_local_features": {
+    "schema_version": 1,
+    "seed": 1105,
+    "model_name": "GAE",
+    "set_name": "local_features",
+    "path": {
+      "model": "../output/GAE_MSE_undirected_reverse_output/local_features/model/local_features_seed_1105_GAE_model.joblib",
+      "feature_table": "../output/GAE_MSE_undirected_reverse_output/local_features/model/local_features_seed_1105_GAE_features.json",
+      "feature_source": "feature_sets/local_features.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_42_GAE_feature_selection_cor_095": {
+    "schema_version": 1,
+    "seed": 42,
+    "model_name": "GAE",
+    "set_name": "feature_selection_cor_095",
+    "path": {
+      "model": "../output/GAE_MSE_undirected_reverse_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_42_GAE_model.joblib",
+      "feature_table": "../output/GAE_MSE_undirected_reverse_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_42_GAE_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_095.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_123_GAE_feature_selection_cor_095": {
+    "schema_version": 1,
+    "seed": 123,
+    "model_name": "GAE",
+    "set_name": "feature_selection_cor_095",
+    "path": {
+      "model": "../output/GAE_MSE_undirected_reverse_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_123_GAE_model.joblib",
+      "feature_table": "../output/GAE_MSE_undirected_reverse_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_123_GAE_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_095.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_456_GAE_feature_selection_cor_095": {
+    "schema_version": 1,
+    "seed": 456,
+    "model_name": "GAE",
+    "set_name": "feature_selection_cor_095",
+    "path": {
+      "model": "../output/GAE_MSE_undirected_reverse_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_456_GAE_model.joblib",
+      "feature_table": "../output/GAE_MSE_undirected_reverse_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_456_GAE_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_095.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_789_GAE_feature_selection_cor_095": {
+    "schema_version": 1,
+    "seed": 789,
+    "model_name": "GAE",
+    "set_name": "feature_selection_cor_095",
+    "path": {
+      "model": "../output/GAE_MSE_undirected_reverse_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_789_GAE_model.joblib",
+      "feature_table": "../output/GAE_MSE_undirected_reverse_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_789_GAE_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_095.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_1105_GAE_feature_selection_cor_095": {
+    "schema_version": 1,
+    "seed": 1105,
+    "model_name": "GAE",
+    "set_name": "feature_selection_cor_095",
+    "path": {
+      "model": "../output/GAE_MSE_undirected_reverse_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_1105_GAE_model.joblib",
+      "feature_table": "../output/GAE_MSE_undirected_reverse_output/feature_selection_cor_095/model/feature_selection_cor_095_seed_1105_GAE_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_095.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_42_GAE_feature_selection_cor_09": {
+    "schema_version": 1,
+    "seed": 42,
+    "model_name": "GAE",
+    "set_name": "feature_selection_cor_09",
+    "path": {
+      "model": "../output/GAE_MSE_undirected_reverse_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_42_GAE_model.joblib",
+      "feature_table": "../output/GAE_MSE_undirected_reverse_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_42_GAE_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_09.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_123_GAE_feature_selection_cor_09": {
+    "schema_version": 1,
+    "seed": 123,
+    "model_name": "GAE",
+    "set_name": "feature_selection_cor_09",
+    "path": {
+      "model": "../output/GAE_MSE_undirected_reverse_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_123_GAE_model.joblib",
+      "feature_table": "../output/GAE_MSE_undirected_reverse_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_123_GAE_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_09.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_456_GAE_feature_selection_cor_09": {
+    "schema_version": 1,
+    "seed": 456,
+    "model_name": "GAE",
+    "set_name": "feature_selection_cor_09",
+    "path": {
+      "model": "../output/GAE_MSE_undirected_reverse_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_456_GAE_model.joblib",
+      "feature_table": "../output/GAE_MSE_undirected_reverse_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_456_GAE_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_09.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_789_GAE_feature_selection_cor_09": {
+    "schema_version": 1,
+    "seed": 789,
+    "model_name": "GAE",
+    "set_name": "feature_selection_cor_09",
+    "path": {
+      "model": "../output/GAE_MSE_undirected_reverse_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_789_GAE_model.joblib",
+      "feature_table": "../output/GAE_MSE_undirected_reverse_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_789_GAE_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_09.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
+  },
+  "seed_1105_GAE_feature_selection_cor_09": {
+    "schema_version": 1,
+    "seed": 1105,
+    "model_name": "GAE",
+    "set_name": "feature_selection_cor_09",
+    "path": {
+      "model": "../output/GAE_MSE_undirected_reverse_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_1105_GAE_model.joblib",
+      "feature_table": "../output/GAE_MSE_undirected_reverse_output/feature_selection_cor_09/model/feature_selection_cor_09_seed_1105_GAE_features.json",
+      "feature_source": "feature_sets/feature_selection_cor_09.json",
+      "encoder": null,
+      "scaler": null,
+      "embeddings": {}
+    }
   }
 }

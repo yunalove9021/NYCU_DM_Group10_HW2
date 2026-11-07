@@ -180,7 +180,7 @@ def build_report(config_path, output_path=None):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=ROOT / "configs" / "base.yaml")
-    parser.add_argument("--output", type=Path, default=ROOT / "Analysis" / "training_results.xlsx")
+    parser.add_argument("--output", type=Path, default=ROOT / "Analysis" / "training_results2.xlsx")
     args = parser.parse_args(argv)
     try:
         return build_report(args.config, args.output)

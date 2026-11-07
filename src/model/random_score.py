@@ -1,254 +1,135 @@
-import argparse
 import json
-from pathlib import Path
+import random
+
 import joblib
-import matplotlib
-matplotlib.use("Agg") 
-import matplotlib.pyplot as plt
-import pandas as pd
 import numpy as np
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import (
-    confusion_matrix,
-    f1_score,
-    precision_score,
-    recall_score,
-    roc_auc_score,
-    roc_curve,
-    average_precision_score,
-    matthews_corrcoef
-)
-from sklearn import set_config
-set_config(display="text")
-random_seed = 42
+import pandas as pd
 
-def evaluate_and_save(model, data, features_name, name, output):
-    """輸出所有資料列的預測，僅用有標籤的資料計算評估指標。"""
-    x = data[features_name]
-    ##########################################################################################################################
-    probabilities = model.predict_proba(x)
-
-    # Find the column corresponding to anomaly class (1)
-    anomaly_idx = np.where(model.classes_ == 1)[0][0]
-
-    probability_anomaly = probabilities[:, anomaly_idx]
-    predicted = (probability_anomaly >= 0.5).astype(int)
-    ##########################################################################################################################
-
-    # classes_ 的順序不可自行假定；0=正常，1=異常
-    classes = list(model.classes_)
-    probability_normal = probabilities[:, classes.index(0)]
-    probability_anomaly = probabilities[:, classes.index(1)]
-
-    actual = (
-        data["y"]
-        if "y" in data.columns
-        else pd.Series(float("nan"), index=data.index)
-    )
-
-    pd.DataFrame({
-        "time_step": data["time_step"],
-        "y_true": actual,
-        "y_pred": predicted,
-        "probability_anomaly": probability_anomaly,
-        "probability_normal": probability_normal,
-    }).to_csv(
-        output / f"{name}_predictions.csv",
-        index=False,
-        encoding="utf-8-sig",
-    )
-
-    known = actual.notna()
-    metrics = {
-        "n_rows": int(len(data)),
-        "n_labeled": int(known.sum()),
-        "auroc": None,
-    }
-    curve_data = None
-
-    if known.any():
-        y_true = actual.loc[known].astype(int)
-        y_pred = predicted[known.to_numpy()]
-        y_score = probability_anomaly[known.to_numpy()]
-
-        # labels=[0, 1] 時，矩陣為 [[TN, FP], [FN, TP]]
-        tn, fp, fn, tp = confusion_matrix(
-            y_true, y_pred, labels=[0, 1]
-        ).ravel()
-
-        metrics.update({
-            "precision_anomaly": float(precision_score(
-                y_true, y_pred, pos_label=1, zero_division=0
-            )),
-            "recall_anomaly": float(recall_score(
-                y_true, y_pred, pos_label=1, zero_division=0
-            )),
-            "f1_anomaly": float(f1_score(
-                y_true, y_pred, pos_label=1, zero_division=0
-            )),
-            "mcc": float(matthews_corrcoef(y_true, y_pred)),
-            "confusion_matrix": {
-                "TN": int(tn),
-                "FP": int(fp),
-                "FN": int(fn),
-                "TP": int(tp),
-            },
-        })
-
-        # AUROC/ROC 必須同時有 0 與 1 兩種真實標籤
-        if y_true.nunique() == 2:
-            fpr, tpr, thresholds = roc_curve(
-                y_true, y_score, pos_label=1
-            )
-            metrics["auroc"] = float(roc_auc_score(y_true, y_score))
-            # PR-AUC (Average Precision)
-            metrics["pr_auc"] = float(
-                average_precision_score(y_true, y_score)
-            )
-            pd.DataFrame({
-                "fpr": fpr,
-                "tpr": tpr,
-                "threshold": thresholds,
-            }).to_csv(
-                output / f"{name}_roc_points.csv",
-                index=False,
-                encoding="utf-8-sig",
-            )
-            curve_data = (fpr, tpr)
-
-    return metrics, curve_data
-
-def summarize_labels(data_sets, output_dir):
-    """統計單一資料集的正常、異常及未標記樣本數量。"""
-    output_dir = Path(output_dir)
-    all_summary = []
-    for data, name in data_sets:
-        y = (
-            data["y"]
-            if "y" in data.columns
-            else pd.Series(float("nan"), index=data.index)
-        )
-        summary = {
-            "dataset": name,
-            "total": int(len(data)),
-            "labeled": int(y.notna().sum()),
-            "normal_0": int((y == 0).sum()),
-            "anomaly_1": int((y == 1).sum()),
-            "unlabeled_nan": int(y.isna().sum()),
-        }
-        all_summary.append(summary)
-    summary = pd.DataFrame(all_summary)
-    summary.to_excel(
-        output_dir / f"label_summary.xlsx",
-        index=False
-    )
-    return summary
+# 引入專案架構內的通用 utils 模組
+from src.utils.eval import evaluate_and_save, save_roc_plot
+from src.utils.summarize import summarize_labels
+from src.utils.artifacts import write_artifact_index
 
 class RandomScoreModel:
+    """A baseline model that assigns a uniform random anomaly score."""
     def __init__(self, random_seed=42):
         self.rng = np.random.default_rng(random_seed)
         self.classes_ = np.array([0, 1])
 
     def fit(self, X, y=None):
+        # 隨機模型不需要真實訓練，但為了 API 相容性保留 fit 函數
         return self
 
     def predict_proba(self, X):
         anomaly_score = self.rng.uniform(0, 1, size=len(X))
         normal_score = 1 - anomaly_score
-
-        return np.column_stack([
-            normal_score,
-            anomaly_score
-        ])
+        return np.column_stack([normal_score, anomaly_score])
 
     def predict(self, X):
         probabilities = self.predict_proba(X)
         return (probabilities[:, 1] >= 0.5).astype(int)
 
-def main(data_dir, output_dir, n_estimators, random_seed):
-    train = pd.read_csv(data_dir+'nodes_train.csv')
-    val = pd.read_csv(data_dir+'nodes_validation.csv')
-    test_before_event = pd.read_csv(data_dir+'nodes_test_pre_event.csv')
-    test_after_event = pd.read_csv(data_dir+'nodes_test_post_event.csv')
-    data_sets = [(train, 'train'), (val, 'val'), (test_before_event, 'test_before_event'), (test_after_event, 'test_after_event')]
-    summarize_labels(data_sets, output_dir)
-    features_name = list(train.columns)[4:]
-    print(len(train))
-    labeled = train["y"].notna()
-    ##########################################################################################################################
-    model = RandomScoreModel(random_seed=random_seed)
-    model.fit(train.loc[labeled, features_name])
-    ##########################################################################################################################
-    output = Path(output_dir)
-    metrics = {}
-    plt.figure(figsize=(7, 6))
-    has_curve = False
-    for name, data in (("val", val), ("test_before_event", test_before_event), ("test_after_event", test_after_event)):
-        metrics[name], curve_data = evaluate_and_save(
-            model, data, features_name, name, output
+def run(config):
+    settings = config["data"]
+    files = {"train": settings["train_file"], "val": settings["val_file"],
+             **settings["test_files"]}
+    datasets = {name: pd.read_csv(config["input"] / filename)
+                for name, filename in files.items()}
+    results = {}
+    for feature_set in settings["feature_sets"]:
+        set_settings = {**settings, **feature_set}
+        results[feature_set["set_name"]] = _run_feature_set(config, datasets, set_settings)
+    return results
+
+
+def _run_feature_set(config, datasets, settings):
+    """Train every seed for one feature set using the already loaded data."""
+    train = datasets["train"]
+    label = settings.get("label_column", "y")
+    features = settings.get("feature_columns")
+    
+    if features is None:
+        features = list(train.columns)[settings.get("feature_start_index", 4):]
+    if not isinstance(features, list) or not features or len(features) != len(set(features)) or label in features:
+        raise ValueError("Features must be a nonempty unique list excluding the label column")
+        
+    for name, data in datasets.items():
+        missing = set(features) - set(data.columns)
+        if missing:
+            raise ValueError(f"{name}: missing features {sorted(missing)}")
+        if label in data and not data[label].dropna().isin([0, 1]).all():
+            raise ValueError(f"{name}: labels must be 0, 1, or missing")
+            
+    if label not in train or not train[label].notna().any():
+        raise ValueError("Training data must contain labeled rows")
+
+    # -------------------------------------------------------------------
+    # 防漏機制 (Data Leakage Prevention)
+    # 對於無監督的 Baseline 模型，僅萃取 Training Set 中的純正常節點 (y == 0)
+    # -------------------------------------------------------------------
+    labeled_mask = train[label].notna()
+    normal_mask = (train[label] == 0)
+    # 嚴格的訓練特徵：只有已標記且為正常的節點
+    train_normal_features = train.loc[labeled_mask & normal_mask, features]
+    
+    model_name = config["model"]["name"]
+    set_name = settings.get("set_name", "basic")
+    output = config["output"] / f"{model_name}_output" / set_name
+    dirs = {name: output / name for name in ("model", "eval", "predict")}
+    for directory in dirs.values():
+        directory.mkdir(parents=True, exist_ok=True)
+        
+    all_metrics = {}
+    for seed in config["random_seeds"]:
+        random.seed(seed)
+        np.random.seed(seed)
+        prefix = f"{set_name}_seed_{seed}_{model_name}"
+        
+        # 實例化模型
+        model_params = config["model"].get("params", {})
+        model_seed = model_params.get("random_seed", seed)
+        model = RandomScoreModel(random_seed=model_seed)
+        
+        # 使用防漏後的純正常節點進行擬合
+        model.fit(train_normal_features)
+        
+        joblib.dump({"model": model, "features": features, "seed": seed,
+                     "label_column": label, "set_name": set_name},
+                    dirs["model"] / f"{prefix}_model.joblib")
+                    
+        summarize_labels([(data, name) for name, data in datasets.items()],
+                         dirs["eval"] / f"{prefix}_label_summary.xlsx", label)
+                         
+        metrics, curves = {}, {}
+        for name, data in datasets.items():
+            if name == "train":
+                continue
+            metrics[name], curve = evaluate_and_save(
+                model, data, features, name, dirs["eval"], dirs["predict"], prefix, label)
+            if curve is not None:
+                curves[name] = curve
+                
+        save_roc_plot(curves, metrics, dirs["eval"] / f"{prefix}_roc_curve.png")
+        
+        (dirs["eval"] / f"{prefix}_metrics.json").write_text(
+            json.dumps(metrics, indent=2, ensure_ascii=False, allow_nan=False), encoding="utf-8")
+            
+        write_artifact_index(
+            output, seed, model_name, set_name, features,
+            index_path=config["model_index"],
+            input_features=settings.get("encoder_features"),
+            embedding_columns=settings.get("embedding_columns"),
+            feature_source=settings.get("feature_source"),
+            **settings.get("encoder_artifacts", {}),
         )
-        if curve_data is not None:
-            fpr, tpr = curve_data
-            plt.plot(
-                fpr, tpr,
-                label=f"{name.upper()} (AUROC={metrics[name]['auroc']:.4f})",
-            )
-            has_curve = True
-    if has_curve:
-        plt.plot([0, 1], [0, 1], "--", label="Random (AUROC=0.5)")
-        plt.xlabel("False Positive Rate (FPR)")
-        plt.ylabel("True Positive Rate (TPR)")
-        plt.title("ROC Curve: Validation / Test")
-        plt.legend()
-        plt.tight_layout()
-        plt.savefig(output / "roc_curve.png", dpi=180)
-    plt.close()
-
-    (output / "metrics.json").write_text(
-        json.dumps(metrics, indent=2, ensure_ascii=False),
-        encoding="utf-8",
-    )
-
-    # importance = pd.DataFrame({
-    #     "feature": features_name,
-    #     "importance": model.feature_importances_,
-    # }).sort_values("importance", ascending=False).reset_index(drop=True)
-    # importance.insert(0, "rank", importance.index + 1)
-    # importance.to_csv(
-    #     output / "feature_importance.csv", index=False, encoding="utf-8-sig"
-    # )
-
-    # joblib.dump(
-    #     {"model": model, "features": features_name},
-    #     output / "model.joblib",
-    # )
-
-    print(f"Labeled train rows: {int(labeled.sum())}")
-    print(f"Features: {len(features_name)}")
-    for name, result in metrics.items():
-        auc_text = (
-            f"{result['auroc']:.4f}"
-            if result["auroc"] is not None
-            else "unavailable"
-        )
-        print(f"{name.upper()}: labeled={result['n_labeled']}, AUROC={auc_text}")
-    print(f"Output: {output.resolve()}")
-    return None
-
-def merge_features(data_dir, output_dir):
-    log_reg = pd.read_csv(fr"{data_dir}Logistic_Regression.csv")
-    rf_feature_important = pd.read_csv(fr"{output_dir}feature_importance.csv")
-    df = pd.merge(log_reg, rf_feature_important, how= 'left')
-    df = df.astype({'rank':'Int64'})
-    df.to_excel(fr"{output_dir}feature_merge_analysis.xlsx")
-    return None
-
-if __name__ == '__main__':
-    random_seed = 42
-    n_estimators = 300
-    data_dir = f'./Data/'
-    output_dir = f'./output/RS_output/'
-    output = Path(output_dir)
-    output.mkdir(parents=True, exist_ok=True)
-    main(data_dir, output_dir, n_estimators, random_seed)
-    # merge_features(data_dir, output_dir)
+        
+        all_metrics[seed] = metrics
+        
+        # 為了報告清晰，我們把純正常節點的數量印出來
+        pure_normal_count = len(train_normal_features)
+        print(f"set={set_name}, seed={seed}: pure normal train rows={pure_normal_count}, features={len(features)}")
+        for name, result in metrics.items():
+            print(f"  {name}: labeled={result['n_labeled']}, AUROC={result.get('auroc', 'N/A')}")
+            
+    print(f"Output: {output}")
+    return all_metrics

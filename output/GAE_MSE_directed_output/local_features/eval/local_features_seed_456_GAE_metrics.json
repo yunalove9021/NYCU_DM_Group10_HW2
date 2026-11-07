@@ -1,0 +1,50 @@
+{
+  "val": {
+    "n_rows": 18485,
+    "n_labeled": 4330,
+    "auroc": 0.1345887083930562,
+    "pr_auc": 0.09023077886763844,
+    "precision_anomaly": 0.15953757225433526,
+    "recall_anomaly": 1.0,
+    "f1_anomaly": 0.27517447657028915,
+    "mcc": 0.01480354744082911,
+    "confusion_matrix": {
+      "TN": 5,
+      "FP": 3635,
+      "FN": 0,
+      "TP": 690
+    }
+  },
+  "test_before_event": {
+    "n_rows": 32313,
+    "n_labeled": 8642,
+    "auroc": 0.19903248982749924,
+    "pr_auc": 0.04900739238217604,
+    "precision_anomaly": 0.08470261513538532,
+    "recall_anomaly": 1.0,
+    "f1_anomaly": 0.15617665884360998,
+    "mcc": 0.0,
+    "confusion_matrix": {
+      "TN": 0,
+      "FP": 7910,
+      "FN": 0,
+      "TP": 732
+    }
+  },
+  "test_after_event": {
+    "n_rows": 29684,
+    "n_labeled": 6687,
+    "auroc": 0.36536464338173213,
+    "pr_auc": 0.018021377595654815,
+    "precision_anomaly": 0.025272917601315985,
+    "recall_anomaly": 1.0,
+    "f1_anomaly": 0.04929988331388565,
+    "mcc": 0.0,
+    "confusion_matrix": {
+      "TN": 0,
+      "FP": 6518,
+      "FN": 0,
+      "TP": 169
+    }
+  }
+}

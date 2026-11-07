@@ -19,6 +19,8 @@ data:
   feature_columns:
     - feature_sets/basic.json
     - feature_sets/local_features.json
+    - feature_sets/feature_selection_cor_095.json
+    - feature_sets/feature_selection_cor_09.json
     # - feature_sets/selected.json
   feature_start_index: 4
 
@@ -52,3 +54,38 @@ models:
       loss:
         name: weighted_cross_entropy
         class_weights: balanced
+
+  # python main.py --config configs/base.yaml --model random_score
+  random_score:
+    params: {}
+    
+  # python main.py --config configs/base.yaml --model single_feature
+  single_feature:
+    params:
+      feature_name: "feature_18"
+    
+  # python main.py --config configs/base.yaml --model isolation_forest
+  isolation_forest:
+    params:
+      n_estimators: 300
+      reverse_score: false
+    
+  # python main.py --config configs/base.yaml --model AE
+  AE:
+    params:
+      latent_dim: 32
+      batch_size: 256
+      epochs: 50
+      lr: 0.0005
+      loss_type: "MSE"          # 可填 "MSE" 或 "L1"
+      reverse_score: true      # 依據資料集特性選擇是否倒置分數
+  
+  # python main.py --config configs/base.yaml --model GAE
+  GAE:
+    params:
+      latent_dim: 64
+      epochs: 100
+      lr: 0.0005
+      loss_type: "MSE"          # 可填 "MSE" 或 "L1"
+      undirected: true         # true 代表雙向圖，false 代表單向圖
+      reverse_score: true      # 決定是否倒置異常分數

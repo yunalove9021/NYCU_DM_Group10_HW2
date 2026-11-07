@@ -1,0 +1,9 @@
+{
+  "input_features": [
+    "feature_18"
+  ],
+  "embedding_columns": [],
+  "model_features": [
+    "feature_18"
+  ]
+}
