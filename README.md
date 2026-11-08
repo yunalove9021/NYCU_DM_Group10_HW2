@@ -2,7 +2,9 @@
 
 ## Dataset: Elliptic Bitcoin Dataset
 
-本專案使用 [Elliptic Bitcoin Dataset](https://www.kaggle.com/datasets/ellipticco/elliptic-data-set) 進行 Bitcoin 非法交易辨識。資料由 Elliptic 與 MIT-IBM Watson AI Lab 發表，詳細定義見 Weber et al. 的[原始論文](https://arxiv.org/abs/1908.02591)。
+本專案使用 [Elliptic Bitcoin Dataset](https://www.kaggle.com/datasets/ellipticco/elliptic-data-set) 進行 Bitcoin 非法交易辨識。資料由 Elliptic 與 MIT-IBM Watson AI Lab 發表，詳細定義見 Weber et al. 的 [原始論文](https://arxiv.org/abs/1908.02591)。
+
+由於資料檔案大於標準 GitHub 上傳限制，我們透過 Google Drive 資料夾提供處理後的完整資料集，請於 [本連結](https://drive.google.com/drive/folders/1CP_xMwjkMYdurRGi3JEXve5pLavoa1jq?usp=drive_link) 下載整份資料後，解壓縮至本專案目錄下使用。
 
 ### 資料結構
 
