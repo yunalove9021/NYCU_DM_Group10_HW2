@@ -7,3 +7,5 @@ PyYAML
 openpyxl
 torch
 torch-geometric
+scipy
+networkx

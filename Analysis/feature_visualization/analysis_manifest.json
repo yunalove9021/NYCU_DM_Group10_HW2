@@ -1,0 +1,458 @@
+{
+  "train_file": "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\data\\nodes_train.csv",
+  "train_edge_file": "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\data\\edge_train.csv",
+  "training_output": "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output",
+  "models": [
+    "RF",
+    "GCN_RF"
+  ],
+  "seeds": [
+    42,
+    123,
+    456,
+    789,
+    1105
+  ],
+  "n_train_nodes": 123287,
+  "n_train_labeled": 26905,
+  "n_train_licit": 23951,
+  "n_train_illicit": 2954,
+  "feature_importance_files": [
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\RF_output\\basic\\eval\\basic_seed_42_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\RF_output\\basic\\eval\\basic_seed_123_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\RF_output\\basic\\eval\\basic_seed_456_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\RF_output\\basic\\eval\\basic_seed_789_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\RF_output\\basic\\eval\\basic_seed_1105_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\GCN_RF_output\\basic\\eval\\basic_seed_42_GCN_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\GCN_RF_output\\basic\\eval\\basic_seed_123_GCN_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\GCN_RF_output\\basic\\eval\\basic_seed_456_GCN_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\GCN_RF_output\\basic\\eval\\basic_seed_789_GCN_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\GCN_RF_output\\basic\\eval\\basic_seed_1105_GCN_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\RF_output\\feature_selection_cor_09\\eval\\feature_selection_cor_09_seed_42_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\RF_output\\feature_selection_cor_09\\eval\\feature_selection_cor_09_seed_123_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\RF_output\\feature_selection_cor_09\\eval\\feature_selection_cor_09_seed_456_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\RF_output\\feature_selection_cor_09\\eval\\feature_selection_cor_09_seed_789_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\RF_output\\feature_selection_cor_09\\eval\\feature_selection_cor_09_seed_1105_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\GCN_RF_output\\feature_selection_cor_09\\eval\\feature_selection_cor_09_seed_42_GCN_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\GCN_RF_output\\feature_selection_cor_09\\eval\\feature_selection_cor_09_seed_123_GCN_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\GCN_RF_output\\feature_selection_cor_09\\eval\\feature_selection_cor_09_seed_456_GCN_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\GCN_RF_output\\feature_selection_cor_09\\eval\\feature_selection_cor_09_seed_789_GCN_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\GCN_RF_output\\feature_selection_cor_09\\eval\\feature_selection_cor_09_seed_1105_GCN_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\RF_output\\feature_selection_cor_095\\eval\\feature_selection_cor_095_seed_42_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\RF_output\\feature_selection_cor_095\\eval\\feature_selection_cor_095_seed_123_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\RF_output\\feature_selection_cor_095\\eval\\feature_selection_cor_095_seed_456_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\RF_output\\feature_selection_cor_095\\eval\\feature_selection_cor_095_seed_789_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\RF_output\\feature_selection_cor_095\\eval\\feature_selection_cor_095_seed_1105_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\GCN_RF_output\\feature_selection_cor_095\\eval\\feature_selection_cor_095_seed_42_GCN_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\GCN_RF_output\\feature_selection_cor_095\\eval\\feature_selection_cor_095_seed_123_GCN_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\GCN_RF_output\\feature_selection_cor_095\\eval\\feature_selection_cor_095_seed_456_GCN_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\GCN_RF_output\\feature_selection_cor_095\\eval\\feature_selection_cor_095_seed_789_GCN_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\GCN_RF_output\\feature_selection_cor_095\\eval\\feature_selection_cor_095_seed_1105_GCN_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\RF_output\\local_features\\eval\\local_features_seed_42_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\RF_output\\local_features\\eval\\local_features_seed_123_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\RF_output\\local_features\\eval\\local_features_seed_456_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\RF_output\\local_features\\eval\\local_features_seed_789_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\RF_output\\local_features\\eval\\local_features_seed_1105_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\GCN_RF_output\\local_features\\eval\\local_features_seed_42_GCN_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\GCN_RF_output\\local_features\\eval\\local_features_seed_123_GCN_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\GCN_RF_output\\local_features\\eval\\local_features_seed_456_GCN_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\GCN_RF_output\\local_features\\eval\\local_features_seed_789_GCN_RF_feature_importance.csv",
+    "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\GCN_RF_output\\local_features\\eval\\local_features_seed_1105_GCN_RF_feature_importance.csv"
+  ],
+  "top": 20,
+  "heatmap_source": "combined",
+  "mi_random_state": 42,
+  "mi_discrete_features": [],
+  "library_versions": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.5",
+    "scipy": "1.18.1",
+    "scikit-learn": "1.9.1",
+    "matplotlib": "3.11.2",
+    "networkx": "3.7"
+  },
+  "correlation_threshold": 0.9,
+  "feature_sets": {
+    "basic": {
+      "features": [
+        "feature_52",
+        "feature_55",
+        "feature_53",
+        "feature_43",
+        "feature_41",
+        "feature_47",
+        "feature_49",
+        "feature_23",
+        "feature_29",
+        "feature_60",
+        "feature_59",
+        "feature_65",
+        "feature_67",
+        "feature_61",
+        "feature_79",
+        "feature_89",
+        "feature_90",
+        "feature_5",
+        "feature_132",
+        "feature_18"
+      ],
+      "n_complete_train_rows": 123287,
+      "excluded_constant_features": [],
+      "high_correlation_pairs": [
+        {
+          "feature_a": "feature_53",
+          "feature_b": "feature_55",
+          "spearman_rho": 0.9960729660530959,
+          "abs_rho": 0.9960729660530959,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_65",
+          "feature_b": "feature_59",
+          "spearman_rho": 0.9991893138832924,
+          "abs_rho": 0.9991893138832924,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_65",
+          "feature_b": "feature_61",
+          "spearman_rho": 0.9908649613525139,
+          "abs_rho": 0.9908649613525139,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_65",
+          "feature_b": "feature_67",
+          "spearman_rho": 0.991713079897664,
+          "abs_rho": 0.991713079897664,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_55",
+          "feature_b": "feature_52",
+          "spearman_rho": 0.9242018255764926,
+          "abs_rho": 0.9242018255764926,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_59",
+          "feature_b": "feature_61",
+          "spearman_rho": 0.9917108012652632,
+          "abs_rho": 0.9917108012652632,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_59",
+          "feature_b": "feature_67",
+          "spearman_rho": 0.9908914688235877,
+          "abs_rho": 0.9908914688235877,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_41",
+          "feature_b": "feature_47",
+          "spearman_rho": 0.9961009738344696,
+          "abs_rho": 0.9961009738344696,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_41",
+          "feature_b": "feature_43",
+          "spearman_rho": 0.9986197934542774,
+          "abs_rho": 0.9986197934542774,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_41",
+          "feature_b": "feature_49",
+          "spearman_rho": 0.994944302052986,
+          "abs_rho": 0.994944302052986,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_47",
+          "feature_b": "feature_43",
+          "spearman_rho": 0.9945656451431064,
+          "abs_rho": 0.9945656451431064,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_47",
+          "feature_b": "feature_49",
+          "spearman_rho": 0.9986796564427789,
+          "abs_rho": 0.9986796564427789,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_61",
+          "feature_b": "feature_67",
+          "spearman_rho": 0.999138006007441,
+          "abs_rho": 0.999138006007441,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_43",
+          "feature_b": "feature_49",
+          "spearman_rho": 0.9960637463788072,
+          "abs_rho": 0.9960637463788072,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_29",
+          "feature_b": "feature_23",
+          "spearman_rho": 0.9999883649201984,
+          "abs_rho": 0.9999883649201984,
+          "high_correlation": true
+        }
+      ]
+    },
+    "feature_selection_cor_09": {
+      "features": [
+        "feature_4",
+        "feature_10",
+        "feature_24",
+        "feature_54",
+        "feature_58",
+        "feature_5",
+        "feature_138",
+        "feature_131",
+        "feature_18",
+        "feature_23",
+        "feature_60",
+        "feature_59",
+        "feature_77",
+        "feature_89",
+        "feature_90",
+        "feature_41",
+        "feature_53",
+        "feature_52",
+        "feature_142",
+        "feature_2"
+      ],
+      "n_complete_train_rows": 123287,
+      "excluded_constant_features": [],
+      "high_correlation_pairs": [
+        {
+          "feature_a": "feature_4",
+          "feature_b": "feature_10",
+          "spearman_rho": 0.9664988437582854,
+          "abs_rho": 0.9664988437582854,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_54",
+          "feature_b": "feature_24",
+          "spearman_rho": 0.9462649063813079,
+          "abs_rho": 0.9462649063813079,
+          "high_correlation": true
+        }
+      ]
+    },
+    "feature_selection_cor_095": {
+      "features": [
+        "feature_138",
+        "feature_5",
+        "feature_58",
+        "feature_18",
+        "feature_25",
+        "feature_23",
+        "feature_59",
+        "feature_60",
+        "feature_77",
+        "feature_91",
+        "feature_89",
+        "feature_90",
+        "feature_41",
+        "feature_53",
+        "feature_55",
+        "feature_52",
+        "feature_54",
+        "feature_4",
+        "feature_2",
+        "feature_142"
+      ],
+      "n_complete_train_rows": 123287,
+      "excluded_constant_features": [],
+      "high_correlation_pairs": [
+        {
+          "feature_a": "feature_53",
+          "feature_b": "feature_55",
+          "spearman_rho": 0.9960729660530959,
+          "abs_rho": 0.9960729660530959,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_55",
+          "feature_b": "feature_52",
+          "spearman_rho": 0.9242018255764926,
+          "abs_rho": 0.9242018255764926,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_89",
+          "feature_b": "feature_91",
+          "spearman_rho": 0.9819960964919688,
+          "abs_rho": 0.9819960964919688,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_23",
+          "feature_b": "feature_25",
+          "spearman_rho": 0.9938290056421014,
+          "abs_rho": 0.9938290056421014,
+          "high_correlation": true
+        }
+      ]
+    },
+    "local_features": {
+      "features": [
+        "feature_5",
+        "feature_52",
+        "feature_55",
+        "feature_53",
+        "feature_43",
+        "feature_41",
+        "feature_47",
+        "feature_49",
+        "feature_90",
+        "feature_89",
+        "feature_79",
+        "feature_61",
+        "feature_67",
+        "feature_65",
+        "feature_59",
+        "feature_60",
+        "feature_29",
+        "feature_23",
+        "feature_18",
+        "feature_2"
+      ],
+      "n_complete_train_rows": 123287,
+      "excluded_constant_features": [],
+      "high_correlation_pairs": [
+        {
+          "feature_a": "feature_53",
+          "feature_b": "feature_55",
+          "spearman_rho": 0.9960729660530959,
+          "abs_rho": 0.9960729660530959,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_65",
+          "feature_b": "feature_59",
+          "spearman_rho": 0.9991893138832924,
+          "abs_rho": 0.9991893138832924,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_65",
+          "feature_b": "feature_61",
+          "spearman_rho": 0.9908649613525139,
+          "abs_rho": 0.9908649613525139,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_65",
+          "feature_b": "feature_67",
+          "spearman_rho": 0.991713079897664,
+          "abs_rho": 0.991713079897664,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_55",
+          "feature_b": "feature_52",
+          "spearman_rho": 0.9242018255764926,
+          "abs_rho": 0.9242018255764926,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_41",
+          "feature_b": "feature_47",
+          "spearman_rho": 0.9961009738344696,
+          "abs_rho": 0.9961009738344696,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_41",
+          "feature_b": "feature_43",
+          "spearman_rho": 0.9986197934542774,
+          "abs_rho": 0.9986197934542774,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_41",
+          "feature_b": "feature_49",
+          "spearman_rho": 0.994944302052986,
+          "abs_rho": 0.994944302052986,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_59",
+          "feature_b": "feature_61",
+          "spearman_rho": 0.9917108012652632,
+          "abs_rho": 0.9917108012652632,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_59",
+          "feature_b": "feature_67",
+          "spearman_rho": 0.9908914688235877,
+          "abs_rho": 0.9908914688235877,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_47",
+          "feature_b": "feature_43",
+          "spearman_rho": 0.9945656451431064,
+          "abs_rho": 0.9945656451431064,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_47",
+          "feature_b": "feature_49",
+          "spearman_rho": 0.9986796564427789,
+          "abs_rho": 0.9986796564427789,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_61",
+          "feature_b": "feature_67",
+          "spearman_rho": 0.999138006007441,
+          "abs_rho": 0.999138006007441,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_43",
+          "feature_b": "feature_49",
+          "spearman_rho": 0.9960637463788072,
+          "abs_rho": 0.9960637463788072,
+          "high_correlation": true
+        },
+        {
+          "feature_a": "feature_29",
+          "feature_b": "feature_23",
+          "spearman_rho": 0.9999883649201984,
+          "abs_rho": 0.9999883649201984,
+          "high_correlation": true
+        }
+      ]
+    }
+  },
+  "focus_missing_from_train": [],
+  "focus_high_correlation_pairs": [],
+  "graph": {
+    "n_nodes": 123287,
+    "n_edges_read": 142784,
+    "n_directed_edges_used": 142784,
+    "n_undirected_edges": 142784,
+    "definition": "Unique edges, self-loops removed. Directed in/out degree; neighbor mean degree and clustering on undirected projection. Isolates have 0."
+  },
+  "methods": {
+    "mi": "MI(feature; binary train label), nats; continuous kNN n_neighbors=3 unless --discrete-features; constant MI=0; original class proportions, no resampling",
+    "ks": "Two-sided empirical KS D; no p-values/inference, including for discrete graph degrees",
+    "spearman": "All train nodes, including unlabeled. Heatmap uses complete rows; average linkage on 1-|rho|. Focus references may be outside candidate set.",
+    "importance": "RF mean decrease in impurity in each panel; GCN_RF importance is from its downstream RF, not GCN weights. SD uses ddof=1. No cross-model feature averaging.",
+    "embedding_caveat": "Embedding coordinate identities may rotate/permutate across independently trained seed encoders; coordinate-wise stability is descriptive, not semantic alignment.",
+    "graph": "Topology built without labels from all train t1-30 nodes; labels used only for ECDF/MI/KS. No transaction amount semantics inferred from feature_*."
+  }
+}

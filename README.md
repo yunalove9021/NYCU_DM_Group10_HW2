@@ -238,3 +238,88 @@ python analysis_check.py --config configs/base.yaml
 seed 數僅在每組結果列出一次，個別指標是否缺值可回查 `Metrics_by_seed`。
 超參數描述來自目前 YAML，若訓練後修改設定，可能與歷史結果不同。
 可用 `--output Analysis/其他檔名.xlsx` 指定報表檔名。
+
+### RF／GCN_RF 特徵視覺化
+
+`visualize_features.py` 讀取指定訓練 output，僅分析 RF 與 GCN_RF，其他模型資料夾不會納入。
+原始資料只讀取 `base.yaml` 指定的 train node 與 train edge，不讀取 validation／test 的特徵或標籤。
+
+```powershell
+python visualize_features.py --config configs/base.yaml --output-dir output
+```
+
+預設按 YAML 的 5 個 seed，分析 output 下的全部特徵集。也可指定特徵集、seed 與儲存位置：
+
+```powershell
+python visualize_features.py --output-dir output --feature-sets basic local_features --seeds 42 123 456 789 1105 --top 20 --save-dir Analysis/feature_visualization
+```
+
+每個模型／特徵集都必須有完整 5 組 `*_feature_importance.csv`，且各 seed 的特徵空間一致。
+缺少 seed 或欄位時會直接報錯，不會將缺失當成 0。若要刻意分析其他數量，需明確設定
+`--expected-seeds` 並傳入相同數量的 seed。可用 `--models RF` 僅分析 RF；`GCN-RF` 也可作為 `GCN_RF` 的輸入名稱。
+
+結果預設存於 `Analysis/feature_visualization/`，每張圖同時提供 PNG 與 PDF，並附 CSV 數值表：
+
+| 圖表 | 內容與計算方式 |
+| --- | --- |
+| `<特徵集>/01_mi_ks_rankings` | MI 與 KS distance 並排 Top 20 水平長條圖；僅使用有標籤的 train nodes，保留原始類別比例。 |
+| `<特徵集>/02_spearman_clustered` | Top 20 特徵的 Spearman heatmap，使用全部 train nodes（含無標籤節點）的完整資料列，按 `1 - abs(rho)` 做 average-linkage 階層分群。 |
+| `<特徵集>/03_importance_stability` | RF、GCN_RF 分開 panel，呈現 5 seed 平均 impurity importance、樣本 SD，以及各 seed 進入 Top 10 的次數。 |
+| `04_graph_structural_ecdf` | Train t1–30 的 in-degree、out-degree、鄰居平均 degree、local clustering 類別條件 ECDF，標示 MI／KS。 |
+
+Spearman 預設從 MI、KS、RF importance 排名交錯選取特徵，優先保留
+`feature_5`、`feature_18`、`feature_60`、`feature_90`。如果這四個欄位不在該組候選特徵中，
+仍可作為 train 參考欄位加入，圖上以 `*` 標記；焦點特徵以紅色標示。
+可用 `--heatmap-source mi`、`ks` 或 `rf` 改變選取來源；`--top` 支援 15–20。
+高相關門檻預設為 `abs(rho) >= 0.9`，可用 `--correlation-threshold` 調整。
+
+MI 以 nats 表示，原始候選欄位預設為連續變數，使用 kNN estimator（`n_neighbors=3`、random state 42）；
+已知離散欄位可用 `--discrete-features` 指定。KS 輸出兩類 ECDF 的最大距離 D，不以 p-value 進行顯著性判斷。
+Spearman 不納入 embedding，僅檢查原始 train 欄位的冗餘關係。常數欄位與缺失值處理會記錄於數值表或分析資訊。
+
+GCN_RF panel 的 importance 來自後段 RF，與 RF panel 都是 mean decrease in impurity，並非 GCN 權重。
+原始特徵與 embedding 使用不同顏色。不同 seed 的 GCN embedding 座標未對齊，
+單一 `emb_dim_*` 的跨 seed 波動僅作描述，不代表每個座標具有相同語意。
+
+圖結構特徵由 train t1–30 的全部節點與 edge 建立，再使用已知 train 標籤比較 licit／illicit。
+移除重複 edge 與 self-loop；in/out degree 保留方向，鄰居平均 degree 與 clustering 使用無向投影。
+不將未知語意的 `feature_*` 當成交易金額，也不使用任何測試標籤計算圖特徵。
+
+`focus_spearman.csv` 保存四個焦點特徵的相關矩陣，`analysis_manifest.json` 記錄資料來源、
+seed、方法、高相關配對與樣本數；其餘 CSV 包含完整 MI／KS 排名、各 seed importance、穩定度彙整與圖結構特徵。
+
+### Validation threshold 分析
+
+`threshold_check.py` 只讀取 output 中 RF／GCN_RF 已保存的預測 CSV，不重新訓練或讀取原始資料。
+預設以 `0.01` 步距掃描 `0.50` 至 `1.00`（含端點），依 validation 的 anomaly F1 選擇 threshold，
+選定後再套用至 validation 與各 test；test 標籤不參與 threshold 選擇。
+
+```powershell
+python threshold_check.py --config configs/base.yaml --output-dir output
+python threshold_check.py --output-dir output --feature-sets basic local_features --seeds 42 123 456 789 1105
+```
+
+每組模型／特徵集先將 5 個 seed 的預測依 `txId` 對齊，再逐筆計算
+`mean(probability_anomaly)`，形成一份 ensemble 預測。節點集合、標籤與 `time_step`
+必須一致，列順序可不同。以平均後的 validation 機率計算 F1 並選出單一 threshold，
+再套用到同樣平均後的 val／test 機率；不單獨計算各 seed 的指標，也不平均各 seed 的 F1。
+若 F1 完全相同，採最低 threshold。判定規則為 `mean(probability_anomaly) >= threshold`。
+
+結果分開存於 `Analysis/threshold/<模型>/<特徵集>/`：
+
+| 檔案 | 內容 |
+| --- | --- |
+| `validation_threshold_curves.png`／`.pdf` | 平均機率 ensemble 的 validation anomaly F1 折線與 PR-AUC 參考線。 |
+| `validation_threshold_scan.csv` | Ensemble 在各 threshold 的 validation metrics，每個 threshold 只有一筆。 |
+| `best_threshold_results.csv` | Ensemble 在最佳 threshold 的 val／test 結果，包含 precision、recall、F1、MCC、AUROC、PR-AUC、混淆矩陣與筆數。 |
+| `threshold_results.xlsx` | `Val_scan`、`Best_results`、`Ensemble_info` 三個工作表。 |
+| `threshold_selection.json` | 最佳 threshold、probability averaging 規則、seed 與輸入檔案路徑。 |
+
+PR-AUC 沿用 Average Precision 定義，由平均後的機率計算，**不隨 threshold 改變**，
+因此在 threshold 圖上呈水平線；最佳 threshold 依 F1 選取，不會將二值化預測當成 AP 的機率輸入。
+僅使用已知標籤計算指標，沒有標籤的 test 仍可另存預測，metrics 則留白。
+
+可透過 `--start`、`--end`、`--step` 調整掃描範圍，或 `--models RF` 只分析 RF。
+預設要求 5 個 seed 齊全；刻意使用其他數量時需設定 `--expected-seeds`，至少為 2。
+加上 `--save-predictions` 會額外輸出最佳 threshold 下的平均機率與逐筆 val／test 預測 CSV；
+預設只輸出圖表與指標，保留原 output 預測檔不變。舊版的個別 seed threshold 與平均 metrics 檔會在成功更新後移除。
