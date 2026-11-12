@@ -13,9 +13,9 @@ import numpy as np
 #    (名稱必須與 Excel 中「Seed_summary」分頁的 model 欄位字串完全一致)
 # ==============================================================================
 TIER_GROUPS = {
-    "Tier 1 (Baselines)": ["random_score", "single_feature_feature_5", "single_feature_feature_18", "single_feature_feature_60", "isolation_forest", "isolation_forest_reverse"],
-    "Tier 2 (Unsupervised)": ["AE_L1", "AE_L1_reverse", "AE_MSE", "AE_MSE_reverse", "GAE_L1_directed", "GAE_L1_directed_reverse", "GAE_L1_undirected", "GAE_L1_undirected_reverse", "GAE_MSE_directed", "GAE_MSE_directed_reverse", "GAE_MSE_undirected", "GAE_MSE_undirected_reverse"],
-    "Tier 3 (Deep/Graph)": ["RF", "GCN_RF"]
+    "Tier 1 (Baselines)": ["single_feature_feature_60"],
+    "Tier 2 (Unsupervised)": ["GCN_RF"],
+    "Tier 3 (Deep/Graph)": ["RF"]
 }
 
 # 設定各 Tier 的對應顏色 (Matplotlib 色碼)
@@ -46,7 +46,7 @@ def load_data(excel_path, target_dataset):
         
     return df_filtered
 
-def plot_feature_set(df_subset, feature_set_name, output_dir, target_dataset):
+def plot_feature_set(df_full, feature_set_name, output_dir, target_dataset):
     """為單一 Feature Set 繪製包含 3 個指標的子圖"""
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -76,20 +76,24 @@ def plot_feature_set(df_subset, feature_set_name, output_dir, target_dataset):
         
         # 依序抓取每個模型在這個 Feature Set 的數據
         for model in plot_models:
-            row = df_subset[df_subset["model"] == model]
+            # 判斷邏輯：如果是 single_feature 且當前不是 basic，就強制去抓 basic 的數據
+            if "single_feature" in model and feature_set_name != "basic":
+                row = df_full[(df_full["model"] == model) & (df_full["feature_set"] == "basic")]
+            else:
+                row = df_full[(df_full["model"] == model) & (df_full["feature_set"] == feature_set_name)]
+
             if not row.empty and mean_col in row.columns:
                 means.append(row[mean_col].values[0])
-                # 如果 std 是 NaN (例如只有跑 1 個 seed)，就補 0
                 std_val = row[std_col].values[0]
                 stds.append(0.0 if pd.isna(std_val) else std_val)
             else:
                 means.append(0.0)
                 stds.append(0.0)
                 
-        # 繪製長條圖與 Error bars (yerr)
+        # 繪製長條圖
         x_pos = np.arange(len(plot_models))
-        bars = ax.bar(x_pos, means, yerr=stds, color=plot_colors, 
-                      capsize=5, alpha=0.85, edgecolor="black")
+        bars = ax.bar(x_pos, means, color=plot_colors, 
+                      alpha=0.85, edgecolor="black")
         
         ax.set_title(metric_info["title"], fontsize=14)
         ax.set_xticks(x_pos)
@@ -107,7 +111,6 @@ def plot_feature_set(df_subset, feature_set_name, output_dir, target_dataset):
     import matplotlib.patches as mpatches
     legend_patches = [mpatches.Patch(color=color, label=tier) 
                       for tier, color in TIER_COLORS.items()]
-    # 將 Legend 放在整張圖的中上偏右方
     fig.legend(handles=legend_patches, loc='upper right', bbox_to_anchor=(0.98, 0.98), fontsize=12)
     
     plt.tight_layout()
@@ -125,7 +128,7 @@ def main():
     parser.add_argument("--dataset", type=str, default="val", help="Target dataset to plot (e.g., test_after_event, val)")
     args = parser.parse_args()
     
-    # 1. 讀取與過濾資料
+    # 1. 讀取與過濾資料 (只依 dataset 過濾，保留完整 feature_set 供交叉引用)
     df = load_data(args.excel, args.dataset)
     
     # 2. 取得所有的 feature sets
@@ -134,8 +137,7 @@ def main():
     
     # 3. 為每個 feature set 畫一張大圖
     for fs in feature_sets:
-        df_fs = df[df["feature_set"] == fs]
-        plot_feature_set(df_fs, fs, args.output, args.dataset)
+        plot_feature_set(df, fs, args.output, args.dataset)
 
 if __name__ == "__main__":
     main()

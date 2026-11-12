@@ -62,7 +62,7 @@ models:
   # python main.py --config configs/base.yaml --model single_feature
   single_feature:
     params:
-      feature_name: "feature_18"
+      feature_name: "feature_60"
     
   # python main.py --config configs/base.yaml --model isolation_forest
   isolation_forest:
