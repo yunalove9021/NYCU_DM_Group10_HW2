@@ -1,5 +1,5 @@
 {
- "seed_123_RF_basic": {
+  "seed_123_RF_basic": {
     "schema_version": 1,
     "seed": 123,
     "model_name": "RF",
@@ -945,8 +945,8 @@
     "model_name": "single_feature",
     "set_name": "basic",
     "path": {
-      "model": "../output/single_feature_feature_18_output/basic/model/basic_seed_42_single_feature_model.joblib",
-      "feature_table": "../output/single_feature_feature_18_output/basic/model/basic_seed_42_single_feature_features.json",
+      "model": "../output/single_feature_feature_60_output/basic/model/basic_seed_42_single_feature_model.joblib",
+      "feature_table": "../output/single_feature_feature_60_output/basic/model/basic_seed_42_single_feature_features.json",
       "feature_source": "feature_sets/basic.json",
       "encoder": null,
       "scaler": null,
