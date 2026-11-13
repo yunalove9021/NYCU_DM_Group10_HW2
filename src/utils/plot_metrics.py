@@ -13,16 +13,16 @@ import numpy as np
 #    (名稱必須與 Excel 中「Seed_summary」分頁的 model 欄位字串完全一致)
 # ==============================================================================
 TIER_GROUPS = {
-    "Tier 1 (Baselines)": ["single_feature_feature_60"],
-    "Tier 2 (Unsupervised)": ["GCN_RF"],
-    "Tier 3 (Deep/Graph)": ["RF"]
+    "Tier 1 - Naive Baseline": ["single_feature_feature_60"],
+    "Tier 2 - Primary Method": ["RF"],
+    "Tier 3 - Strong/SOTA Reference": ["GCN_RF"]
 }
 
 # 設定各 Tier 的對應顏色 (Matplotlib 色碼)
 TIER_COLORS = {
-    "Tier 1 (Baselines)": "#B0B0B0",      # 灰色
-    "Tier 2 (Unsupervised)": "#4C72B0",   # 藍色
-    "Tier 3 (Deep/Graph)": "#DD8452"      # 橘色
+    "Tier 1 - Naive Baseline": "#B0B0B0",      # 灰色
+    "Tier 2 - Primary Method": "#4C72B0",   # 藍色
+    "Tier 3 - Strong/SOTA Reference": "#DD8452"      # 橘色
 }
 
 METRICS_TO_PLOT = [

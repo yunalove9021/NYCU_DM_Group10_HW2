@@ -12,9 +12,9 @@ import numpy as np
 # 1. 定義要呈現的模型與所屬 Tier 顏色
 # ==============================================================================
 TIER_COLORS = {
-    "Tier 1 (Baselines)": "#B0B0B0",      # 灰色
-    "Tier 2 (Unsupervised)": "#4C72B0",   # 藍色
-    "Tier 3 (Deep/Graph)": "#DD8452"      # 橘色
+    "Tier 1 - Naive Baseline": "#B0B0B0",      # 灰色
+    "Tier 2 - Primary Method": "#4C72B0",   # 藍色
+    "Tier 3 - Strong/SOTA Reference": "#DD8452"      # 橘色
 }
 
 METRICS_TO_PLOT = [
@@ -52,12 +52,12 @@ def plot_overview_comparison(df_full, output_dir, target_dataset):
     # 1. 先加入 Single Feature (Tier 1) - 只取一項
     single_feature_name = "single_feature_feature_60"
     x_labels.append("Single Feature(60)\n(Baseline)")
-    plot_items.append((single_feature_name, "basic", "Tier 1 (Baselines)"))
+    plot_items.append((single_feature_name, "basic", "Tier 1 - Naive Baseline"))
     
     # 2. 加入其他模型 (Tier 2 & Tier 3)，每個 model 對應各自的 4 個 feature sets
     other_models = [
-        ("GCN_RF", "Tier 2 (Unsupervised)"),
-        ("RF", "Tier 3 (Deep/Graph)")
+        ("RF", "Tier 2 - Primary Method"),
+        ("GCN_RF", "Tier 3 - Strong/SOTA Reference")
     ]
     
     for model_name, tier_key in other_models:
@@ -113,7 +113,7 @@ def plot_overview_comparison(df_full, output_dir, target_dataset):
     import matplotlib.patches as mpatches
     legend_patches = [mpatches.Patch(color=color, label=tier) 
                       for tier, color in TIER_COLORS.items()]
-    fig.legend(handles=legend_patches, loc='upper right', bbox_to_anchor=(0.98, 0.98), fontsize=11)
+    fig.legend(handles=legend_patches, loc='upper right', bbox_to_anchor=(0.98, 1.05), fontsize=11)
     
     plt.tight_layout()
     
@@ -127,7 +127,7 @@ def main():
     parser = argparse.ArgumentParser(description="Plot overview comparison of models and feature sets")
     parser.add_argument("--excel", type=str, default="./Analysis/training_results_all.xlsx", help="Path to Excel file")
     parser.add_argument("--output", type=str, default="./Analysis/Plots_Overview", help="Directory to save plots")
-    parser.add_argument("--dataset", type=str, default="val", help="Target dataset to plot (e.g., test_after_event, val)")
+    parser.add_argument("--dataset", type=str, default="test_before_event", help="Target dataset to plot (e.g., test_after_event, val)")
     args = parser.parse_args()
     
     # 1. 讀取與過濾資料
