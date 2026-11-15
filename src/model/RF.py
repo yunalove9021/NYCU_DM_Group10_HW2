@@ -11,6 +11,7 @@ from sklearn.ensemble import RandomForestClassifier
 from src.utils.eval import evaluate_and_save, save_roc_plot
 from src.utils.summarize import summarize_labels
 from src.utils.artifacts import write_artifact_index
+from src.utils.run_log import RunLog
 
 
 def run(config):
@@ -26,7 +27,7 @@ def run(config):
     return results
 
 
-def _run_feature_set(config, datasets, settings):
+def _run_feature_set(config, datasets, settings, run_log=None):
     """Train every seed for one feature set using the already loaded data."""
     train = datasets["train"]
     label = settings.get("label_column", "y")
@@ -52,43 +53,53 @@ def _run_feature_set(config, datasets, settings):
         directory.mkdir(parents=True, exist_ok=True)
     all_metrics = {}
     for seed in config["random_seeds"]:
-        random.seed(seed)
-        np.random.seed(seed)
-        prefix = f"{set_name}_seed_{seed}_{model_name}"
-        model = RandomForestClassifier(**config["model"]["params"], random_state=seed)
-        model.fit(train.loc[labeled, features], train.loc[labeled, label].astype(int))
-        joblib.dump({"model": model, "features": features, "seed": seed,
-                     "label_column": label, "set_name": set_name},
-                    dirs["model"] / f"{prefix}_model.joblib")
-        summarize_labels([(data, name) for name, data in datasets.items()],
-                         dirs["eval"] / f"{prefix}_label_summary.xlsx", label)
-        metrics, curves = {}, {}
-        for name, data in datasets.items():
-            if name == "train":
-                continue
-            metrics[name], curve = evaluate_and_save(
-                model, data, features, name, dirs["eval"], dirs["predict"], prefix, label)
-            if curve is not None:
-                curves[name] = curve
-        save_roc_plot(curves, metrics, dirs["eval"] / f"{prefix}_roc_curve.png")
-        (dirs["eval"] / f"{prefix}_metrics.json").write_text(
-            json.dumps(metrics, indent=2, ensure_ascii=False, allow_nan=False), encoding="utf-8")
-        importance = pd.DataFrame({"feature": features, "importance": model.feature_importances_})
-        importance = importance.sort_values("importance", ascending=False).reset_index(drop=True)
-        importance.insert(0, "rank", importance.index + 1)
-        importance.to_csv(dirs["eval"] / f"{prefix}_feature_importance.csv",
-                          index=False, encoding="utf-8-sig")
-        write_artifact_index(
-            output, seed, model_name, set_name, features,
-            index_path=config["model_index"],
-            input_features=settings.get("encoder_features"),
-            embedding_columns=settings.get("embedding_columns"),
-            feature_source=settings.get("feature_source"),
-            **settings.get("encoder_artifacts", {}),
-        )
-        all_metrics[seed] = metrics
-        print(f"set={set_name}, seed={seed}: labeled train rows={int(labeled.sum())}, features={len(features)}")
-        for name, result in metrics.items():
-            print(f"  {name}: labeled={result['n_labeled']}, AUROC={result['auroc']}")
+        log = run_log or RunLog(model_name, set_name, seed, directory=config.get("log_dir"))
+        log.event("training_configuration", model_params={**config["model"]["params"], "random_state": seed},
+                  features=features, n_train_rows=len(train), n_labeled=int(labeled.sum()),
+                  output=str(output.resolve()))
+        with log.stage("rf_pipeline", dataset="all", n_rows=len(train), n_features=len(features), device="cpu"):
+            random.seed(seed)
+            np.random.seed(seed)
+            prefix = f"{set_name}_seed_{seed}_{model_name}"
+            model = RandomForestClassifier(**config["model"]["params"], random_state=seed)
+            with log.stage("rf_fit", dataset="train", n_rows=int(labeled.sum()),
+                           n_features=len(features), device="cpu"):
+                model.fit(train.loc[labeled, features], train.loc[labeled, label].astype(int))
+            joblib.dump({"model": model, "features": features, "seed": seed,
+                         "label_column": label, "set_name": set_name},
+                        dirs["model"] / f"{prefix}_model.joblib")
+            summarize_labels([(data, name) for name, data in datasets.items()],
+                             dirs["eval"] / f"{prefix}_label_summary.xlsx", label)
+            metrics, curves = {}, {}
+            for name, data in datasets.items():
+                if name == "train":
+                    continue
+                metrics[name], curve = evaluate_and_save(
+                    model, data, features, name, dirs["eval"], dirs["predict"], prefix, label, run_log=log)
+                log.event("evaluation_metrics", dataset=name, metrics=metrics[name])
+                if curve is not None:
+                    curves[name] = curve
+            save_roc_plot(curves, metrics, dirs["eval"] / f"{prefix}_roc_curve.png")
+            (dirs["eval"] / f"{prefix}_metrics.json").write_text(
+                json.dumps(metrics, indent=2, ensure_ascii=False, allow_nan=False), encoding="utf-8")
+            importance = pd.DataFrame({"feature": features, "importance": model.feature_importances_})
+            importance = importance.sort_values("importance", ascending=False).reset_index(drop=True)
+            importance.insert(0, "rank", importance.index + 1)
+            importance.to_csv(dirs["eval"] / f"{prefix}_feature_importance.csv",
+                              index=False, encoding="utf-8-sig")
+            write_artifact_index(
+                output, seed, model_name, set_name, features,
+                index_path=config["model_index"],
+                input_features=settings.get("encoder_features"),
+                embedding_columns=settings.get("embedding_columns"),
+                feature_source=settings.get("feature_source"),
+                **settings.get("encoder_artifacts", {}),
+            )
+            all_metrics[seed] = metrics
+            print(f"set={set_name}, seed={seed}: labeled train rows={int(labeled.sum())}, features={len(features)}")
+            for name, result in metrics.items():
+                print(f"  {name}: labeled={result['n_labeled']}, AUROC={result['auroc']}")
+        if run_log is None:
+            print(f"Log: {log.path.resolve()}")
     print(f"Output: {output}")
     return all_metrics

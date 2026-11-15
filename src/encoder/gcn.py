@@ -2,6 +2,7 @@
 
 from copy import deepcopy
 import random
+from time import perf_counter
 
 import joblib
 import numpy as np
@@ -12,6 +13,7 @@ from torch_geometric.nn import GCNConv
 from sklearn.preprocessing import StandardScaler
 
 from src.utils.graph import edge_indices
+from src.utils.run_log import synchronize_device
 
 
 class GCNEncoder(nn.Module):
@@ -31,7 +33,7 @@ class GCNEncoder(nn.Module):
         return self.classifier(self.encode(x, edge_index))
 
 
-def fit_encoder(datasets, edges, features, label, settings, seed):
+def fit_encoder(datasets, edges, features, label, settings, seed, run_log=None):
     """Fit on train labels only; select checkpoint using validation loss."""
     random.seed(seed)
     np.random.seed(seed)
@@ -79,6 +81,8 @@ def fit_encoder(datasets, edges, features, label, settings, seed):
     val_x, val_edges, val_y, val_mask = graphs["val"]
     has_validation = bool(val_mask.any())
     for epoch in range(1, params["epochs"] + 1):
+        synchronize_device(device)
+        epoch_started = perf_counter()
         model.train()
         optimizer.zero_grad()
         loss = criterion(model(x, edge_index)[mask], y[mask])
@@ -99,6 +103,13 @@ def fit_encoder(datasets, edges, features, label, settings, seed):
         else:
             stale += 1
         print(f"GCN seed={seed} epoch={epoch}: loss={float(loss.detach()):.6f}, val_loss={val_loss}")
+        synchronize_device(device)
+        epoch_seconds = perf_counter() - epoch_started
+        history[-1]["elapsed_seconds"] = epoch_seconds
+        if run_log is not None:
+            run_log.event("gcn_epoch", epoch=epoch, train_loss=history[-1]["train_loss"],
+                          val_loss=val_loss, elapsed_seconds=epoch_seconds, best_epoch=best_epoch,
+                          stale_epochs=stale, device=str(device))
         if has_validation and stale >= params["patience"]:
             break
     model.load_state_dict(best_state)

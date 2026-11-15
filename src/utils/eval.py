@@ -1,6 +1,7 @@
 """Reusable binary-classification prediction, metrics, and ROC exports."""
 
 from pathlib import Path
+from contextlib import nullcontext
 
 import matplotlib
 matplotlib.use("Agg")
@@ -14,7 +15,7 @@ from sklearn.metrics import (
 
 
 def evaluate_and_save(model, data, features, name, eval_dir, predict_dir,
-                      prefix, label_column="y"):
+                      prefix, label_column="y", run_log=None):
     """Predict all rows; calculate metrics only for known binary labels."""
     eval_dir, predict_dir = Path(eval_dir), Path(predict_dir)
     eval_dir.mkdir(parents=True, exist_ok=True)
@@ -23,8 +24,11 @@ def evaluate_and_save(model, data, features, name, eval_dir, predict_dir,
     if not actual.dropna().isin([0, 1]).all():
         raise ValueError(f"{name}: labels must be 0, 1, or missing")
     x = data[features]
-    predicted = model.predict(x) if len(data) else np.array([], dtype=int)
-    probabilities = model.predict_proba(x) if len(data) else np.empty((0, len(model.classes_)))
+    timing = run_log.stage("rf_predict", dataset=name, n_rows=len(data), n_features=len(features),
+                           device="cpu") if run_log is not None else nullcontext()
+    with timing:
+        predicted = model.predict(x) if len(data) else np.array([], dtype=int)
+        probabilities = model.predict_proba(x) if len(data) else np.empty((0, len(model.classes_)))
     classes = list(model.classes_)
     anomaly = probabilities[:, classes.index(1)] if 1 in classes else np.zeros(len(data))
     normal = probabilities[:, classes.index(0)] if 0 in classes else np.zeros(len(data))

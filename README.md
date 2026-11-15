@@ -357,3 +357,38 @@ python visualize_mi_ks_top10.py --feature-set basic --output-dir output --import
 `--mi-ks-only` 可保留僅計算 train MI／KS 的用法，不要求模型 output。
 GCN_RF 的 importance 是後段 RF 的 impurity importance；不同 seed 的 embedding 軸未對齊，
 `emb_dim_*` 的跨 seed 數值僅作描述，不代表相同語意座標。
+
+### RF／GCN_RF 訓練與預測 log
+
+RF／GCN_RF 訓練及 `predict.py` 預測會自動記錄到專案的 `Analysis/log/<模型>/<特徵集>/`，
+不需額外參數。每個 seed、每次執行都有含時間與唯一識別碼的獨立檔名，例如：
+
+```text
+Analysis/log/RF/basic/basic_seed_42_RF_train_<run_id>.log
+Analysis/log/RF/basic/basic_seed_42_RF_train_<run_id>_timings.csv
+Analysis/log/GCN_RF/basic/basic_seed_42_GCN_RF_predict_<run_id>.log
+Analysis/log/GCN_RF/basic/basic_seed_42_GCN_RF_predict_<run_id>_timings.csv
+```
+
+`.log` 為 UTF-8 JSON Lines，每列是一個事件，包含台北時間、run ID、模型、特徵集、seed、
+操作類型與階段。訓練時另記錄實際模型參數、特徵欄位、樣本數與評估 metrics；
+GCN 會記錄各 epoch 的 train／validation loss、epoch 秒數、最佳 epoch、實際裝置與類別權重。
+同一個 GCN_RF seed 的 encoder 與後段 RF 使用同一份 log。
+
+`_timings.csv` 可直接用 Excel 開啟，包含各階段秒數、dataset、資料筆數、特徵數、裝置與成功／失敗狀態：
+
+| Stage | 耗時範圍 |
+| --- | --- |
+| `rf_fit` | RF 的 fit。 |
+| `rf_predict` | 同一資料集的 `predict` 與 `predict_proba`，不含 CSV 輸出或 metrics 計算。 |
+| `gcn_fit` | Scaler 擬合、train／val 建圖、GCN 訓練與 checkpoint 選擇。 |
+| `gcn_encode` | 標準化、建圖、GCN forward 與 embedding 轉回 CPU。 |
+| `rf_pipeline` | 該 seed 的 RF 訓練、評估及結果儲存總耗時。 |
+| `gcn_rf_pipeline` | 該 seed 的 GCN、embedding 生成及後段 RF 完整耗時。 |
+| `model_load` | `predict.py` 載入 classifier、encoder 與 scaler。 |
+| `predict_pipeline` | `predict.py` 從讀取 input CSV、檢查、載入模型、推論到儲存結果的總耗時。 |
+
+訓練階段的總耗時不含各 seed 共用的原始 CSV 讀取；pipeline 與子階段是巢狀計時，
+比較 RF／GCN_RF 時應分別使用 `rf_pipeline`／`gcn_rf_pipeline`，不要將所有列直接相加。
+秒數使用 monotonic wall-clock 計算，CUDA 階段會在計時邊界同步。失敗階段會保存錯誤類型與訊息。
+紀錄從新增此功能後的實際執行開始產生，既有模型不會補造歷史耗時。

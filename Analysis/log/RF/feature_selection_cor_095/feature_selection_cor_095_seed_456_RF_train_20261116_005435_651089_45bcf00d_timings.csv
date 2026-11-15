@@ -1,0 +1,6 @@
+﻿timestamp,run_id,model_name,feature_set,seed,operation,stage,dataset,status,elapsed_seconds,n_rows,n_features,device,error_type,error
+2026-11-16T00:54:39.480+08:00,20261116_005435_651089_45bcf00d,RF,feature_selection_cor_095,456,train,rf_fit,train,ok,3.8158005999866873,26905,105,cpu,,
+2026-11-16T00:54:40.020+08:00,20261116_005435_651089_45bcf00d,RF,feature_selection_cor_095,456,train,rf_predict,val,ok,0.3952848999761045,18485,105,cpu,,
+2026-11-16T00:54:40.685+08:00,20261116_005435_651089_45bcf00d,RF,feature_selection_cor_095,456,train,rf_predict,test_before_event,ok,0.5331652000313625,32313,105,cpu,,
+2026-11-16T00:54:41.396+08:00,20261116_005435_651089_45bcf00d,RF,feature_selection_cor_095,456,train,rf_predict,test_after_event,ok,0.5205465999897569,29684,105,cpu,,
+2026-11-16T00:54:41.998+08:00,20261116_005435_651089_45bcf00d,RF,feature_selection_cor_095,456,train,rf_pipeline,all,ok,6.341450500010978,123287,105,cpu,,

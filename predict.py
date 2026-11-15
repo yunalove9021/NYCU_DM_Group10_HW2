@@ -11,13 +11,14 @@ import pandas as pd
 from src.model.registry import MODEL_REGISTRY, validate_model_name
 from src.utils.artifacts import load_artifacts, load_manifest, prepare_model_input
 from src.utils.graph import edge_indices
+from src.utils.run_log import RunLog
 
 
 ROOT = Path(__file__).resolve().parent
 
 
 def predict(config_path, model_type, index, input_path, edge_path=None,
-            output_dir=None, device="cpu"):
+            output_dir=None, device="cpu", log_dir=None):
     """Validate input and return the path to a prediction CSV."""
     validate_model_name(model_type)
     if not re.fullmatch(r"[A-Za-z0-9_-]+", index):
@@ -32,40 +33,51 @@ def predict(config_path, model_type, index, input_path, edge_path=None,
     has_encoder = manifest["path"]["encoder"] is not None
     if has_encoder != (model_type == "GCN_RF"):
         raise ValueError(f"Encoder configuration does not match model type {model_type}")
-    input_path = Path(input_path)
-    nodes = pd.read_csv(input_path)
-    feature_table = json.loads(manifest["path"]["feature_table"].read_text(encoding="utf-8"))
-    required = feature_table["input_features" if has_encoder else "model_features"]
-    missing = [feature for feature in required if feature not in nodes.columns]
-    if missing:
-        raise ValueError(f"Input CSV is missing required feature columns: {', '.join(missing)}")
-    try:
-        values = nodes[required].to_numpy(dtype=float)
-    except (ValueError, TypeError) as error:
-        raise ValueError("Input feature columns must contain numeric values") from error
-    if not np.isfinite(values).all():
-        raise ValueError("Input feature columns contain missing values or infinity")
-    edges = pd.read_csv(edge_path) if edge_path is not None else None
-    if has_encoder:
-        edge_indices(nodes, edges)
-    bundle = load_artifacts(config_path, index, device=device)
-    x = prepare_model_input(bundle, nodes, edges)
-    model = bundle["model"]
-    predicted = model.predict(x) if len(x) else np.array([], dtype=int)
-    probabilities = model.predict_proba(x) if len(x) else np.empty((0, len(model.classes_)))
-    classes = list(model.classes_)
-    result = nodes[[column for column in ("txId", "time_step") if column in nodes]].copy()
-    result.insert(0, "input_row", np.arange(len(nodes)))
-    result["y_pred"] = predicted
-    for label, column in [(0, "probability_normal"), (1, "probability_anomaly")]:
-        result[column] = probabilities[:, classes.index(label)] if label in classes else np.zeros(len(nodes))
-    output = Path(output_dir) if output_dir is not None else ROOT / "predict_result"
-    output.mkdir(parents=True, exist_ok=True)
-    output_file = output / f"{index}_{input_path.stem}_predictions.csv"
-    result.to_csv(output_file, index=False, encoding="utf-8-sig")
-    print(f"Model: {index} ({model_type}); rows: {len(nodes)}")
-    print(f"Predictions: {output_file.resolve()}")
-    return output_file
+    log = RunLog(model_type, manifest["set_name"], manifest["seed"], operation="predict", directory=log_dir)
+    log.event("prediction_configuration", model_index=index, config_path=str(Path(config_path).resolve()),
+              input_path=str(input_path), edge_path=str(edge_path) if edge_path is not None else None)
+    with log.stage("predict_pipeline", dataset=Path(input_path).name, device=device if has_encoder else "cpu"):
+        input_path = Path(input_path)
+        nodes = pd.read_csv(input_path)
+        feature_table = json.loads(manifest["path"]["feature_table"].read_text(encoding="utf-8"))
+        required = feature_table["input_features" if has_encoder else "model_features"]
+        missing = [feature for feature in required if feature not in nodes.columns]
+        if missing:
+            raise ValueError(f"Input CSV is missing required feature columns: {', '.join(missing)}")
+        try:
+            values = nodes[required].to_numpy(dtype=float)
+        except (ValueError, TypeError) as error:
+            raise ValueError("Input feature columns must contain numeric values") from error
+        if not np.isfinite(values).all():
+            raise ValueError("Input feature columns contain missing values or infinity")
+        edges = pd.read_csv(edge_path) if edge_path is not None else None
+        if has_encoder:
+            edge_indices(nodes, edges)
+        with log.stage("model_load", dataset=input_path.name, device=device if has_encoder else "cpu"):
+            bundle = load_artifacts(config_path, index, device=device)
+        with log.stage("gcn_encode" if has_encoder else "feature_selection", dataset=input_path.name,
+                       n_rows=len(nodes), n_features=len(required), device=device if has_encoder else "cpu"):
+            x = prepare_model_input(bundle, nodes, edges)
+        model = bundle["model"]
+        with log.stage("rf_predict", dataset=input_path.name, n_rows=len(nodes), n_features=len(x.columns), device="cpu"):
+            predicted = model.predict(x) if len(x) else np.array([], dtype=int)
+            probabilities = model.predict_proba(x) if len(x) else np.empty((0, len(model.classes_)))
+        classes = list(model.classes_)
+        result = nodes[[column for column in ("txId", "time_step") if column in nodes]].copy()
+        result.insert(0, "input_row", np.arange(len(nodes)))
+        result["y_pred"] = predicted
+        for label, column in [(0, "probability_normal"), (1, "probability_anomaly")]:
+            result[column] = probabilities[:, classes.index(label)] if label in classes else np.zeros(len(nodes))
+        output = Path(output_dir) if output_dir is not None else ROOT / "predict_result"
+        output.mkdir(parents=True, exist_ok=True)
+        output_file = output / f"{index}_{input_path.stem}_predictions.csv"
+        with log.stage("prediction_save", dataset=input_path.name, n_rows=len(nodes)):
+            result.to_csv(output_file, index=False, encoding="utf-8-sig")
+        log.event("prediction_complete", output_file=str(output_file.resolve()), n_rows=len(nodes))
+        print(f"Log: {log.path.resolve()}")
+        print(f"Model: {index} ({model_type}); rows: {len(nodes)}")
+        print(f"Predictions: {output_file.resolve()}")
+        return output_file
 
 
 def main(argv=None):
