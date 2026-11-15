@@ -1,0 +1,12 @@
+﻿timestamp,run_id,model_name,feature_set,seed,operation,stage,dataset,status,elapsed_seconds,n_rows,n_features,device,error_type,error
+2026-11-16T01:04:25.112+08:00,20261116_010416_856166_84640c5e,GCN_RF,local_features,42,train,gcn_fit,train,ok,8.248119600000791,123287,93,cpu,,
+2026-11-16T01:04:25.602+08:00,20261116_010416_856166_84640c5e,GCN_RF,local_features,42,train,gcn_encode,train,ok,0.45446029998129234,123287,93,cpu,,
+2026-11-16T01:04:40.475+08:00,20261116_010416_856166_84640c5e,GCN_RF,local_features,42,train,gcn_encode,val,ok,0.14621699997223914,18485,93,cpu,,
+2026-11-16T01:04:42.899+08:00,20261116_010416_856166_84640c5e,GCN_RF,local_features,42,train,gcn_encode,test_before_event,ok,0.16620659996988252,32313,93,cpu,,
+2026-11-16T01:04:46.845+08:00,20261116_010416_856166_84640c5e,GCN_RF,local_features,42,train,gcn_encode,test_after_event,ok,0.16217930003767833,29684,93,cpu,,
+2026-11-16T01:04:59.861+08:00,20261116_010416_856166_84640c5e,GCN_RF,local_features,42,train,rf_fit,train,ok,9.28982070001075,26905,193,cpu,,
+2026-11-16T01:05:00.497+08:00,20261116_010416_856166_84640c5e,GCN_RF,local_features,42,train,rf_predict,val,ok,0.4952247000182979,18485,193,cpu,,
+2026-11-16T01:05:01.301+08:00,20261116_010416_856166_84640c5e,GCN_RF,local_features,42,train,rf_predict,test_before_event,ok,0.6695739999995567,32313,193,cpu,,
+2026-11-16T01:05:02.160+08:00,20261116_010416_856166_84640c5e,GCN_RF,local_features,42,train,rf_predict,test_after_event,ok,0.669919400010258,29684,193,cpu,,
+2026-11-16T01:05:02.747+08:00,20261116_010416_856166_84640c5e,GCN_RF,local_features,42,train,rf_pipeline,all,ok,12.177952500001993,123287,193,cpu,,
+2026-11-16T01:05:02.757+08:00,20261116_010416_856166_84640c5e,GCN_RF,local_features,42,train,gcn_rf_pipeline,all,ok,45.89343180001015,123287,93,cpu,,

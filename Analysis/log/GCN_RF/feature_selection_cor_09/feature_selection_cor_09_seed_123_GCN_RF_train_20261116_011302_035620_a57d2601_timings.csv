@@ -1,0 +1,12 @@
+﻿timestamp,run_id,model_name,feature_set,seed,operation,stage,dataset,status,elapsed_seconds,n_rows,n_features,device,error_type,error
+2026-11-16T01:13:11.625+08:00,20261116_011302_035620_a57d2601,GCN_RF,feature_selection_cor_09,123,train,gcn_fit,train,ok,9.58157499996014,123287,96,cpu,,
+2026-11-16T01:13:12.259+08:00,20261116_011302_035620_a57d2601,GCN_RF,feature_selection_cor_09,123,train,gcn_encode,train,ok,0.5903595000272617,123287,96,cpu,,
+2026-11-16T01:13:29.482+08:00,20261116_011302_035620_a57d2601,GCN_RF,feature_selection_cor_09,123,train,gcn_encode,val,ok,0.18970819999231026,18485,96,cpu,,
+2026-11-16T01:13:32.863+08:00,20261116_011302_035620_a57d2601,GCN_RF,feature_selection_cor_09,123,train,gcn_encode,test_before_event,ok,0.20793640002375469,32313,96,cpu,,
+2026-11-16T01:13:38.441+08:00,20261116_011302_035620_a57d2601,GCN_RF,feature_selection_cor_09,123,train,gcn_encode,test_after_event,ok,0.178971899964381,29684,96,cpu,,
+2026-11-16T01:13:56.511+08:00,20261116_011302_035620_a57d2601,GCN_RF,feature_selection_cor_09,123,train,rf_fit,train,ok,13.135808099992573,26905,196,cpu,,
+2026-11-16T01:13:57.378+08:00,20261116_011302_035620_a57d2601,GCN_RF,feature_selection_cor_09,123,train,rf_predict,val,ok,0.6612173999892548,18485,196,cpu,,
+2026-11-16T01:13:58.336+08:00,20261116_011302_035620_a57d2601,GCN_RF,feature_selection_cor_09,123,train,rf_predict,test_before_event,ok,0.7609981000423431,32313,196,cpu,,
+2026-11-16T01:13:59.391+08:00,20261116_011302_035620_a57d2601,GCN_RF,feature_selection_cor_09,123,train,rf_predict,test_after_event,ok,0.7485153999878094,29684,196,cpu,,
+2026-11-16T01:14:00.096+08:00,20261116_011302_035620_a57d2601,GCN_RF,feature_selection_cor_09,123,train,rf_pipeline,all,ok,16.72131290001562,123287,196,cpu,,
+2026-11-16T01:14:00.108+08:00,20261116_011302_035620_a57d2601,GCN_RF,feature_selection_cor_09,123,train,gcn_rf_pipeline,all,ok,58.06549090001499,123287,96,cpu,,
