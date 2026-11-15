@@ -115,7 +115,7 @@ def plot_rankings(scores, directory, set_name, top):
     save_figure(fig, directory, "01_mi_ks_rankings")
 
 
-def plot_stability(summaries, directory, set_name, top, seeds):
+def plot_stability(summaries, directory, set_name, top, seeds, filename="03_importance_stability"):
     fig, axes = plt.subplots(1, len(summaries), figsize=(8 * len(summaries), max(6, top * 0.39)), squeeze=False)
     for ax, (model, summary) in zip(axes[0], summaries.items()):
         selected = summary.head(top).iloc[::-1]
@@ -136,7 +136,7 @@ def plot_stability(summaries, directory, set_name, top, seeds):
     fig.text(0.5, 0.008, "GCN embedding axes are not aligned across seeds; coordinate-wise variation is descriptive.",
              ha="center", fontsize=9)
     fig.tight_layout(rect=(0, 0.075, 1, 0.96))
-    save_figure(fig, directory, "03_importance_stability")
+    save_figure(fig, directory, filename)
 
 
 def select_correlation_features(scores, rf_summary, available, top, source):

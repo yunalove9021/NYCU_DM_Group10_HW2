@@ -323,3 +323,37 @@ PR-AUC 沿用 Average Precision 定義，由平均後的機率計算，**不隨 
 預設要求 5 個 seed 齊全；刻意使用其他數量時需設定 `--expected-seeds`，至少為 2。
 加上 `--save-predictions` 會額外輸出最佳 threshold 下的平均機率與逐筆 val／test 預測 CSV；
 預設只輸出圖表與指標，保留原 output 預測檔不變。舊版的個別 seed threshold 與平均 metrics 檔會在成功更新後移除。
+
+### Basic 特徵集：MI／KS 與 Importance Top 10
+
+```powershell
+python visualize_mi_ks_top10.py --config configs/base.yaml --feature-set basic
+```
+
+此入口固定分析 `configs/feature_sets/basic.json`，使用 YAML 指定的 train CSV，
+不讀取其他特徵集或 validation／test 原始資料。MI／KS 使用 train；importance
+則讀取 basic 的 RF／GCN_RF output，預設要求完整 5-seed 結果。
+MI／KS 計算沿用 `visualize_features.py` 的方法，各自從全部 basic 特徵中選出 Top 10，
+產生並排水平長條圖並標示數值。MI 的 random state 預設為 42，僅控制估計器的可重現性。
+
+結果放在 `Analysis/feature_visualization/basic_top10/`：
+
+- `basic_mi_ks_top10.png`、`.pdf`：MI／KS Top 10 圖。
+- `basic_mi_top10.csv`、`basic_ks_top10.csv`：兩種排名各自的 Top 10。
+- `basic_mi_ks_all_features.csv`：全部 basic 特徵的分數與有效樣本數。
+- `basic_mi_ks_metadata.json`：train 資料來源、特徵表及計算設定。
+- `basic_importance_top10.png`、`.pdf`：RF／GCN_RF 分 panel 的平均重要度 ± 樣本 SD，附 Top 10 入榜次數。
+- `basic_RF_importance_top10.csv`、`basic_GCN_RF_importance_top10.csv`：各模型依平均重要度選出的 Top 10。
+- `basic_<模型>_importance_all_features.csv`、`basic_<模型>_importance_by_seed.csv`：完整平均排名與逐 seed 數值。
+- `basic_importance_metadata.json`：importance 來源與 seed 設定。
+
+可用 `--save-dir` 指定其他輸出位置，既有 Top 20 圖不會被覆寫。
+若只需新增 importance 圖而不重算 MI／KS，可執行：
+
+```powershell
+python visualize_mi_ks_top10.py --feature-set basic --output-dir output --importance-only
+```
+
+`--mi-ks-only` 可保留僅計算 train MI／KS 的用法，不要求模型 output。
+GCN_RF 的 importance 是後段 RF 的 impurity importance；不同 seed 的 embedding 軸未對齊，
+`emb_dim_*` 的跨 seed 數值僅作描述，不代表相同語意座標。

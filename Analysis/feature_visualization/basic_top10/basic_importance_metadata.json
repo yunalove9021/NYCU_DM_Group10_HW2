@@ -1,0 +1,41 @@
+{
+  "feature_set": "basic",
+  "models": [
+    "RF",
+    "GCN_RF"
+  ],
+  "seeds": [
+    42,
+    123,
+    456,
+    789,
+    1105
+  ],
+  "seed_count": 5,
+  "output_dir": "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output",
+  "source_files": {
+    "RF": [
+      "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\RF_output\\basic\\eval\\basic_seed_42_RF_feature_importance.csv",
+      "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\RF_output\\basic\\eval\\basic_seed_123_RF_feature_importance.csv",
+      "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\RF_output\\basic\\eval\\basic_seed_456_RF_feature_importance.csv",
+      "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\RF_output\\basic\\eval\\basic_seed_789_RF_feature_importance.csv",
+      "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\RF_output\\basic\\eval\\basic_seed_1105_RF_feature_importance.csv"
+    ],
+    "GCN_RF": [
+      "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\GCN_RF_output\\basic\\eval\\basic_seed_42_GCN_RF_feature_importance.csv",
+      "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\GCN_RF_output\\basic\\eval\\basic_seed_123_GCN_RF_feature_importance.csv",
+      "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\GCN_RF_output\\basic\\eval\\basic_seed_456_GCN_RF_feature_importance.csv",
+      "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\GCN_RF_output\\basic\\eval\\basic_seed_789_GCN_RF_feature_importance.csv",
+      "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\output\\GCN_RF_output\\basic\\eval\\basic_seed_1105_GCN_RF_feature_importance.csv"
+    ]
+  },
+  "ranking": "Top 10 by mean impurity importance across seeds; ties sorted by feature name",
+  "error_bars": "Sample standard deviation, ddof=1",
+  "top10_count": "Number of individual seed rankings containing the feature in Top 10",
+  "notes": [
+    "RF and GCN_RF are separate panels with separate feature rankings.",
+    "GCN_RF importance comes from its downstream RF, not GCN parameters.",
+    "Embedding axes are not aligned across seeds; coordinate-wise variation is descriptive.",
+    "Missing seed results or inconsistent feature spaces are errors, not zero importance."
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "feature_set": "basic",
+  "feature_file": "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\configs\\feature_sets\\basic.json",
+  "train_file": "C:\\Users\\User\\Desktop\\Data Mining HW\\Data mining HW2\\NYCU_DM_Group10_HW2\\data\\nodes_train.csv",
+  "label_column": "y",
+  "n_features": 165,
+  "n_train_nodes": 123287,
+  "n_licit": 23951,
+  "n_illicit": 2954,
+  "mi_random_state": 42,
+  "mi_n_neighbors": 3,
+  "mi_discrete_features": [],
+  "notes": [
+    "Only the configured train CSV is read; no validation/test data or model outputs.",
+    "Unlabeled nodes excluded. Missing/nonfinite feature values excluded per feature.",
+    "MI uses nats and continuous kNN estimation unless a feature is explicitly discrete.",
+    "KS is the empirical two-class distance D, not a p-value.",
+    "Both rankings are independent and select Top 10 from the full basic feature set."
+  ]
+}
