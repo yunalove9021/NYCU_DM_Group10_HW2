@@ -1,0 +1,6 @@
+﻿timestamp,run_id,model_name,feature_set,seed,operation,stage,dataset,status,elapsed_seconds,n_rows,n_features,device,error_type,error
+2026-11-16T01:27:16.907+08:00,20261116_012707_264451_ee44559d,GCN_RF,basic,42,predict,model_load,nodes_test_pre_event.csv,ok,8.249695100006647,,,cpu,,
+2026-11-16T01:27:17.260+08:00,20261116_012707_264451_ee44559d,GCN_RF,basic,42,predict,gcn_encode,nodes_test_pre_event.csv,ok,0.3503575000213459,32313,165,cpu,,
+2026-11-16T01:27:17.943+08:00,20261116_012707_264451_ee44559d,GCN_RF,basic,42,predict,rf_predict,nodes_test_pre_event.csv,ok,0.6813963999738917,32313,265,cpu,,
+2026-11-16T01:27:18.124+08:00,20261116_012707_264451_ee44559d,GCN_RF,basic,42,predict,prediction_save,nodes_test_pre_event.csv,ok,0.17234210000606254,32313,,,,
+2026-11-16T01:27:18.128+08:00,20261116_012707_264451_ee44559d,GCN_RF,basic,42,predict,predict_pipeline,nodes_test_pre_event.csv,ok,10.858256799983792,,,cpu,,
